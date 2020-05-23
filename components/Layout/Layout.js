@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Aux from './../../HOC/Aux';
-//import logo from './../../assets/img/tiranga_national_emblem.png';
 import styles from './Layout.module.css';
 
 class Layout extends Component {
