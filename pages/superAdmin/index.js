@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Layout from './../../components/Layout/Layout';
+import Layout from './../../components/Layout/LayoutSuperAdmin';
 import styles from './index.module.css';
 
 class Index extends Component {

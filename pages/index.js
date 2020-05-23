@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import factory from './../ethereum/factory';
 
 class Index extends Component {
-    async componentDidMount() {
+    static async getInitialProps() {
         const response = await factory.methods.viewAssets().call();
-        console.log(response);
+        return { response };
     }
 
     render() {
