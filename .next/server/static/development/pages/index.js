@@ -1,0 +1,177 @@
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = require('../../../ssr-module-cache.js');
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete installedModules[moduleId];
+/******/ 		}
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./ethereum/build/LandRegistration.json":
+/*!**********************************************!*\
+  !*** ./ethereum/build/LandRegistration.json ***!
+  \**********************************************/
+/*! exports provided: interface, bytecode, default */
+/***/ (function(module) {
+
+eval("module.exports = JSON.parse(\"{\\\"interface\\\":[{\\\"inputs\\\":[],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"nonpayable\\\",\\\"type\\\":\\\"constructor\\\"},{\\\"constant\\\":false,\\\"inputs\\\":[{\\\"internalType\\\":\\\"string\\\",\\\"name\\\":\\\"_state\\\",\\\"type\\\":\\\"string\\\"},{\\\"internalType\\\":\\\"string\\\",\\\"name\\\":\\\"_district\\\",\\\"type\\\":\\\"string\\\"},{\\\"internalType\\\":\\\"string\\\",\\\"name\\\":\\\"_village\\\",\\\"type\\\":\\\"string\\\"},{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"_surveyNumber\\\",\\\"type\\\":\\\"uint256\\\"},{\\\"internalType\\\":\\\"address payable\\\",\\\"name\\\":\\\"_OwnerAddress\\\",\\\"type\\\":\\\"address\\\"},{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"_marketValue\\\",\\\"type\\\":\\\"uint256\\\"},{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"name\\\":\\\"Registration\\\",\\\"outputs\\\":[{\\\"internalType\\\":\\\"bool\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"bool\\\"}],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"nonpayable\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":false,\\\"inputs\\\":[{\\\"internalType\\\":\\\"address\\\",\\\"name\\\":\\\"_superAdmin\\\",\\\"type\\\":\\\"address\\\"},{\\\"internalType\\\":\\\"string\\\",\\\"name\\\":\\\"_village\\\",\\\"type\\\":\\\"string\\\"}],\\\"name\\\":\\\"addSuperAdmin\\\",\\\"outputs\\\":[],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"nonpayable\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":false,\\\"inputs\\\":[{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"property\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"name\\\":\\\"buyProperty\\\",\\\"outputs\\\":[],\\\"payable\\\":true,\\\"stateMutability\\\":\\\"payable\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":true,\\\"inputs\\\":[{\\\"internalType\\\":\\\"string\\\",\\\"name\\\":\\\"_state\\\",\\\"type\\\":\\\"string\\\"},{\\\"internalType\\\":\\\"string\\\",\\\"name\\\":\\\"_district\\\",\\\"type\\\":\\\"string\\\"},{\\\"internalType\\\":\\\"string\\\",\\\"name\\\":\\\"_village\\\",\\\"type\\\":\\\"string\\\"},{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"_surveyNumber\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"name\\\":\\\"computeId\\\",\\\"outputs\\\":[{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"view\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":true,\\\"inputs\\\":[{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"uint256\\\"},{\\\"internalType\\\":\\\"address\\\",\\\"name\\\":\\\"user\\\",\\\"type\\\":\\\"address\\\"}],\\\"name\\\":\\\"findId\\\",\\\"outputs\\\":[{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"view\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":true,\\\"inputs\\\":[{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"name\\\":\\\"landInfoOwner\\\",\\\"outputs\\\":[{\\\"internalType\\\":\\\"string\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"string\\\"},{\\\"internalType\\\":\\\"string\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"string\\\"},{\\\"internalType\\\":\\\"string\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"string\\\"},{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint256\\\"},{\\\"internalType\\\":\\\"bool\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"bool\\\"},{\\\"internalType\\\":\\\"address\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"address\\\"},{\\\"internalType\\\":\\\"enum LandRegistration.reqStatus\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint8\\\"}],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"view\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":true,\\\"inputs\\\":[{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"name\\\":\\\"landInfoUser\\\",\\\"outputs\\\":[{\\\"internalType\\\":\\\"address\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"address\\\"},{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint256\\\"},{\\\"internalType\\\":\\\"bool\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"bool\\\"},{\\\"internalType\\\":\\\"address\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"address\\\"},{\\\"internalType\\\":\\\"enum LandRegistration.reqStatus\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint8\\\"}],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"view\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":false,\\\"inputs\\\":[{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"property\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"name\\\":\\\"makeAvailable\\\",\\\"outputs\\\":[],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"nonpayable\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":false,\\\"inputs\\\":[{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"property\\\",\\\"type\\\":\\\"uint256\\\"},{\\\"internalType\\\":\\\"enum LandRegistration.reqStatus\\\",\\\"name\\\":\\\"status\\\",\\\"type\\\":\\\"uint8\\\"}],\\\"name\\\":\\\"processRequest\\\",\\\"outputs\\\":[],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"nonpayable\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":false,\\\"inputs\\\":[{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"name\\\":\\\"requstToLandOwner\\\",\\\"outputs\\\":[],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"nonpayable\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":true,\\\"inputs\\\":[],\\\"name\\\":\\\"viewAssets\\\",\\\"outputs\\\":[{\\\"internalType\\\":\\\"uint256[]\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"uint256[]\\\"}],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"view\\\",\\\"type\\\":\\\"function\\\"},{\\\"constant\\\":true,\\\"inputs\\\":[{\\\"internalType\\\":\\\"uint256\\\",\\\"name\\\":\\\"property\\\",\\\"type\\\":\\\"uint256\\\"}],\\\"name\\\":\\\"viewRequest\\\",\\\"outputs\\\":[{\\\"internalType\\\":\\\"address\\\",\\\"name\\\":\\\"\\\",\\\"type\\\":\\\"address\\\"}],\\\"payable\\\":false,\\\"stateMutability\\\":\\\"view\\\",\\\"type\\\":\\\"function\\\"}],\\\"bytecode\\\":\\\"608060405234801561001057600080fd5b5033600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550611de6806100616000396000f3fe6080604052600436106100a75760003560e01c80636fa830a6116100645780636fa830a6146108145780639d01485f14610842578063a27664ee14610917578063ab05bae614610986578063baa39e0514610a6e578063fdb10f5014610aa9576100a7565b80630d2d5dca146100ac5780631d50a6c41461011857806326e852501461032c5780632b3009d3146103a757806355d61952146105f35780636c5ed939146107d9575b600080fd5b3480156100b857600080fd5b506100c1610af1565b6040518080602001828103825283818151815260200191508051906020019060200280838360005b838110156101045780820151818401526020810190506100e9565b505050509050019250505060405180910390f35b34801561012457600080fd5b506103166004803603608081101561013b57600080fd5b810190808035906020019064010000000081111561015857600080fd5b82018360208201111561016a57600080fd5b8035906020019184600183028401116401000000008311171561018c57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f820116905080830192505050505050509192919290803590602001906401000000008111156101ef57600080fd5b82018360208201111561020157600080fd5b8035906020019184600183028401116401000000008311171561022357600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f8201169050808301925050505050505091929192908035906020019064010000000081111561028657600080fd5b82018360208201111561029857600080fd5b803590602001918460018302840111640100000000831117156102ba57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f82011690508083019250505050505050919291929080359060200190929190505050610b89565b6040518082815260200191505060405180910390f35b34801561033857600080fd5b506103656004803603602081101561034f57600080fd5b8101908080359060200190929190505050610cc7565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156103b357600080fd5b506105d9600480360360e08110156103ca57600080fd5b81019080803590602001906401000000008111156103e757600080fd5b8201836020820111156103f957600080fd5b8035906020019184600183028401116401000000008311171561041b57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f8201169050808301925050505050505091929192908035906020019064010000000081111561047e57600080fd5b82018360208201111561049057600080fd5b803590602001918460018302840111640100000000831117156104b257600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f8201169050808301925050505050505091929192908035906020019064010000000081111561051557600080fd5b82018360208201111561052757600080fd5b8035906020019184600183028401116401000000008311171561054957600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f82011690508083019250505050505050919291929080359060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019092919080359060200190929190505050610d06565b604051808215151515815260200191505060405180910390f35b3480156105ff57600080fd5b5061062c6004803603602081101561061657600080fd5b8101908080359060200190929190505050610fa2565b60405180806020018060200180602001888152602001871515151581526020018673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200185600381111561068a57fe5b60ff16815260200184810384528b818151815260200191508051906020019080838360005b838110156106ca5780820151818401526020810190506106af565b50505050905090810190601f1680156106f75780820380516001836020036101000a031916815260200191505b5084810383528a818151815260200191508051906020019080838360005b83811015610730578082015181840152602081019050610715565b50505050905090810190601f16801561075d5780820380516001836020036101000a031916815260200191505b50848103825289818151815260200191508051906020019080838360005b8381101561079657808201518184015260208101905061077b565b50505050905090810190601f1680156107c35780820380516001836020036101000a031916815260200191505b509a505050505050505050505060405180910390f35b3480156107e557600080fd5b50610812600480360360208110156107fc57600080fd5b810190808035906020019092919050505061126b565b005b6108406004803603602081101561082a57600080fd5b8101908080359060200190929190505050611353565b005b34801561084e57600080fd5b5061087b6004803603602081101561086557600080fd5b8101908080359060200190929190505050611627565b604051808673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001858152602001841515151581526020018373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018260038111156108ff57fe5b60ff1681526020019550505050505060405180910390f35b34801561092357600080fd5b506109706004803603604081101561093a57600080fd5b8101908080359060200190929190803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061170d565b6040518082815260200191505060405180910390f35b34801561099257600080fd5b50610a6c600480360360408110156109a957600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803590602001906401000000008111156109e657600080fd5b8201836020820111156109f857600080fd5b80359060200191846001830284011164010000000083111715610a1a57600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f8201169050808301925050505050505091929192905050506117e2565b005b348015610a7a57600080fd5b50610aa760048036036020811015610a9157600080fd5b81019080803590602001909291905050506118e8565b005b348015610ab557600080fd5b50610aef60048036036040811015610acc57600080fd5b8101908080359060200190929190803560ff169060200190929190505050611986565b005b6060600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001805480602002602001604051908101604052809291908181526020018280548015610b7f57602002820191906000526020600020905b815481526020019060010190808311610b6b575b5050505050905090565b60006509184e72a000858585856040516020018085805190602001908083835b60208310610bcc5780518252602082019150602081019050602083039250610ba9565b6001836020036101000a03801982511681845116808217855250505050505090500184805190602001908083835b60208310610c1d5780518252602082019150602081019050602083039250610bfa565b6001836020036101000a03801982511681845116808217855250505050505090500183805190602001908083835b60208310610c6e5780518252602082019150602081019050602083039250610c4b565b6001836020036101000a0380198251168184511680821785525050505050509050018281526020019450505050506040516020818303038152906040528051906020012060001c81610cbc57fe5b069050949350505050565b600080600083815260200190815260200160002060060160019054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050919050565b60003373ffffffffffffffffffffffffffffffffffffffff166002876040518082805190602001908083835b60208310610d555780518252602082019150602081019050602083039250610d32565b6001836020036101000a038019825116818451168082178552505050505050905001915050908152602001604051809103902060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff161480610e1857503373ffffffffffffffffffffffffffffffffffffffff16600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16145b610e2157600080fd5b876000808481526020019081526020016000206000019080519060200190610e4a929190611ce0565b50866000808481526020019081526020016000206001019080519060200190610e74929190611ce0565b50856000808481526020019081526020016000206002019080519060200190610e9e929190611ce0565b5084600080848152602001908152602001600020600301819055508360008084815260200190815260200160002060040160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508260008084815260200190815260200160002060050181905550600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000182908060018154018082558091505090600182039060005260206000200160009091929091909150555060019050979650505050505050565b60608060606000806000806000808981526020019081526020016000206000016000808a81526020019081526020016000206001016000808b81526020019081526020016000206002016000808c8152602001908152602001600020600301546000808d815260200190815260200160002060060160009054906101000a900460ff166000808e815260200190815260200160002060060160019054906101000a900473ffffffffffffffffffffffffffffffffffffffff166000808f815260200190815260200160002060060160159054906101000a900460ff16868054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156111135780601f106110e857610100808354040283529160200191611113565b820191906000526020600020905b8154815290600101906020018083116110f657829003601f168201915b50505050509650858054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156111af5780601f10611184576101008083540402835291602001916111af565b820191906000526020600020905b81548152906001019060200180831161119257829003601f168201915b50505050509550848054600181600116156101000203166002900480601f01602080910402602001604051908101604052809291908181526020018280546001816001161561010002031660029004801561124b5780601f106112205761010080835404028352916020019161124b565b820191906000526020600020905b81548152906001019060200180831161122e57829003601f168201915b505050505094509650965096509650965096509650919395979092949650565b60008082815260200190815260200160002060060160009054906101000a900460ff1661129757600080fd5b3360008083815260200190815260200160002060060160016101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600080600083815260200190815260200160002060060160006101000a81548160ff021916908315150217905550600160008083815260200190815260200160002060060160156101000a81548160ff0219169083600381111561134b57fe5b021790555050565b60038081111561135f57fe5b60008083815260200190815260200160002060060160159054906101000a900460ff16600381111561138d57fe5b1461139757600080fd5b600a60008083815260200190815260200160002060050154816113b657fe5b0460008083815260200190815260200160002060050154013410156113da57600080fd5b60008082815260200190815260200160002060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166108fc600080848152602001908152602001600020600501549081150290604051600060405180830381858888f1935050505015801561146a573d6000803e3d6000fd5b506114aa60008083815260200190815260200160002060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1682611ad9565b3360008083815260200190815260200160002060040160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600080600083815260200190815260200160002060060160006101000a81548160ff021916908315150217905550600080600083815260200190815260200160002060060160016101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600080600083815260200190815260200160002060060160156101000a81548160ff021916908360038111156115b357fe5b0217905550600360003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000181908060018154018082558091505090600182039060005260206000200160009091929091909150555050565b600080600080600080600087815260200190815260200160002060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff166000808881526020019081526020016000206005015460008089815260200190815260200160002060060160009054906101000a900460ff166000808a815260200190815260200160002060060160019054906101000a900473ffffffffffffffffffffffffffffffffffffffff166000808b815260200190815260200160002060060160159054906101000a900460ff168494509450945094509450945091939590929450565b600080600090505b600360008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001805490508110156117d75783600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000182815481106117b057fe5b906000526020600020015414156117ca57809150506117dc565b8080600101915050611715565b809150505b92915050565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161461183c57600080fd5b816002826040518082805190602001908083835b602083106118735780518252602082019150602081019050602083039250611850565b6001836020036101000a038019825116818451168082178552505050505050905001915050908152602001604051809103902060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505050565b3373ffffffffffffffffffffffffffffffffffffffff1660008083815260200190815260200160002060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff161461195557600080fd5b600160008083815260200190815260200160002060060160006101000a81548160ff02191690831515021790555050565b3373ffffffffffffffffffffffffffffffffffffffff1660008084815260200190815260200160002060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16146119f357600080fd5b8060008084815260200190815260200160002060060160156101000a81548160ff02191690836003811115611a2457fe5b021790555060026003811115611a3657fe5b816003811115611a4257fe5b1415611ad557600080600084815260200190815260200160002060060160016101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600080600084815260200190815260200160002060060160156101000a81548160ff02191690836003811115611acf57fe5b02179055505b5050565b6000611ae5828461170d565b9050600360008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000016001600360008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001805490500381548110611b7c57fe5b9060005260206000200154600360008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000018281548110611bd457fe5b9060005260206000200181905550600360008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000016001600360008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001805490500381548110611c7757fe5b9060005260206000200160009055600360008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001805480919060019003611cda9190611d60565b50505050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f10611d2157805160ff1916838001178555611d4f565b82800160010185558215611d4f579182015b82811115611d4e578251825591602001919060010190611d33565b5b509050611d5c9190611d8c565b5090565b815481835581811115611d8757818360005260206000209182019101611d869190611d8c565b5b505050565b611dae91905b80821115611daa576000816000905550600101611d92565b5090565b9056fea265627a7a723158209934c2a69044ac8f00afb64b8b85a70998ef1b3a23503cef4b7a8317ef202db264736f6c63430005110032\\\"}\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuL2V0aGVyZXVtL2J1aWxkL0xhbmRSZWdpc3RyYXRpb24uanNvbi5qcyIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./ethereum/build/LandRegistration.json\n");
+
+/***/ }),
+
+/***/ "./ethereum/factory.js":
+/*!*****************************!*\
+  !*** ./ethereum/factory.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _web3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./web3 */ \"./ethereum/web3.js\");\n/* harmony import */ var _build_LandRegistration_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./build/LandRegistration.json */ \"./ethereum/build/LandRegistration.json\");\nvar _build_LandRegistration_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./build/LandRegistration.json */ \"./ethereum/build/LandRegistration.json\", 1);\n\n\nconst address = '0x0dd48Ba4Dc9e058471e9B5F57B6A41ACbE345f69';\nconst instance = new _web3__WEBPACK_IMPORTED_MODULE_0__[\"default\"].eth.Contract(_build_LandRegistration_json__WEBPACK_IMPORTED_MODULE_1__.interface, '0x0dd48Ba4Dc9e058471e9B5F57B6A41ACbE345f69');\n/* harmony default export */ __webpack_exports__[\"default\"] = (instance);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9ldGhlcmV1bS9mYWN0b3J5LmpzPzM4ODAiXSwibmFtZXMiOlsiYWRkcmVzcyIsImluc3RhbmNlIiwid2ViMyIsImV0aCIsIkNvbnRyYWN0IiwiTGFuZFJlZ2lzdHJhdGlvbiIsImludGVyZmFjZSJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUNBO0FBRUEsTUFBTUEsT0FBTyxHQUFHLDRDQUFoQjtBQUVBLE1BQU1DLFFBQVEsR0FBRyxJQUFJQyw2Q0FBSSxDQUFDQyxHQUFMLENBQVNDLFFBQWIsQ0FDYkMseURBQWdCLENBQUNDLFNBREosRUFFYiw0Q0FGYSxDQUFqQjtBQUtlTCx1RUFBZiIsImZpbGUiOiIuL2V0aGVyZXVtL2ZhY3RvcnkuanMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgd2ViMyBmcm9tICcuL3dlYjMnO1xuaW1wb3J0IExhbmRSZWdpc3RyYXRpb24gZnJvbSAnLi9idWlsZC9MYW5kUmVnaXN0cmF0aW9uLmpzb24nO1xuXG5jb25zdCBhZGRyZXNzID0gJzB4MGRkNDhCYTREYzllMDU4NDcxZTlCNUY1N0I2QTQxQUNiRTM0NWY2OSc7XG5cbmNvbnN0IGluc3RhbmNlID0gbmV3IHdlYjMuZXRoLkNvbnRyYWN0KFxuICAgIExhbmRSZWdpc3RyYXRpb24uaW50ZXJmYWNlLFxuICAgICcweDBkZDQ4QmE0RGM5ZTA1ODQ3MWU5QjVGNTdCNkE0MUFDYkUzNDVmNjknXG4pO1xuXG5leHBvcnQgZGVmYXVsdCBpbnN0YW5jZTtcbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./ethereum/factory.js\n");
+
+/***/ }),
+
+/***/ "./ethereum/web3.js":
+/*!**************************!*\
+  !*** ./ethereum/web3.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var web3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! web3 */ \"web3\");\n/* harmony import */ var web3__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(web3__WEBPACK_IMPORTED_MODULE_0__);\n\nlet web3;\n\nif (false) {} else {\n  //we are on server and user not running metamask\n  const provider = new web3__WEBPACK_IMPORTED_MODULE_0___default.a.providers.HttpProvider('https://rinkeby.infura.io/v3/716f78cc121c40d299539ffe4442b887');\n  web3 = new web3__WEBPACK_IMPORTED_MODULE_0___default.a(provider);\n  console.log('Errrrrooooooooorrrrr!!!!!!!!');\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (web3);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9ldGhlcmV1bS93ZWIzLmpzP2ExOTAiXSwibmFtZXMiOlsid2ViMyIsInByb3ZpZGVyIiwiV2ViMyIsInByb3ZpZGVycyIsIkh0dHBQcm92aWRlciIsImNvbnNvbGUiLCJsb2ciXSwibWFwcGluZ3MiOiJBQUFBO0FBQUE7QUFBQTtBQUFBO0FBRUEsSUFBSUEsSUFBSjs7QUFFQSxJQUFJLEtBQUosRUFBeUUsRUFBekUsTUFJTztBQUNIO0FBQ0EsUUFBTUMsUUFBUSxHQUFHLElBQUlDLDJDQUFJLENBQUNDLFNBQUwsQ0FBZUMsWUFBbkIsQ0FBZ0MsK0RBQWhDLENBQWpCO0FBQ0FKLE1BQUksR0FBRyxJQUFJRSwyQ0FBSixDQUFTRCxRQUFULENBQVA7QUFDQUksU0FBTyxDQUFDQyxHQUFSLENBQVksOEJBQVo7QUFDSDs7QUFFY04sbUVBQWYiLCJmaWxlIjoiLi9ldGhlcmV1bS93ZWIzLmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFdlYjMgZnJvbSBcIndlYjNcIjtcblxubGV0IHdlYjM7XG5cbmlmICh0eXBlb2Ygd2luZG93ICE9PSBcInVuZGVmaW5lZFwiICYmIHR5cGVvZiB3aW5kb3cud2ViMyAhPT0gXCJ1bmRlZmluZWRcIikge1xuICAgIC8vaW4gYnJvd3NlciBhbmQgbWV0YW1hc2sgdXAgYW5kIHJ1bm5pbmdcbiAgICBjb25zb2xlLmxvZygnTWV0YW1hc2snKTtcbiAgICB3ZWIzID0gbmV3IFdlYjMod2luZG93LndlYjMuY3VycmVudFByb3ZpZGVyKTtcbn0gZWxzZSB7XG4gICAgLy93ZSBhcmUgb24gc2VydmVyIGFuZCB1c2VyIG5vdCBydW5uaW5nIG1ldGFtYXNrXG4gICAgY29uc3QgcHJvdmlkZXIgPSBuZXcgV2ViMy5wcm92aWRlcnMuSHR0cFByb3ZpZGVyKCdodHRwczovL3JpbmtlYnkuaW5mdXJhLmlvL3YzLzcxNmY3OGNjMTIxYzQwZDI5OTUzOWZmZTQ0NDJiODg3Jyk7XG4gICAgd2ViMyA9IG5ldyBXZWIzKHByb3ZpZGVyKTtcbiAgICBjb25zb2xlLmxvZygnRXJycnJyb29vb29vb29vcnJycnIhISEhISEhIScpO1xufVxuXG5leHBvcnQgZGVmYXVsdCB3ZWIzO1xuIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./ethereum/web3.js\n");
+
+/***/ }),
+
+/***/ "./pages/index.js":
+/*!************************!*\
+  !*** ./pages/index.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _ethereum_factory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../ethereum/factory */ \"./ethereum/factory.js\");\nvar _jsxFileName = \"/home/kaustubh/Documents/blockchain/fyp/proj_dev/land_registration/pages/index.js\";\nvar __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;\n\n\n\nclass Index extends react__WEBPACK_IMPORTED_MODULE_0__[\"Component\"] {\n  async componentDidMount() {\n    const response = await _ethereum_factory__WEBPACK_IMPORTED_MODULE_1__[\"default\"].methods.viewAssets().call();\n    console.log(response);\n  }\n\n  render() {\n    return __jsx(\"div\", {\n      __self: this,\n      __source: {\n        fileName: _jsxFileName,\n        lineNumber: 12,\n        columnNumber: 13\n      }\n    }, \" Hello World Index! \");\n  }\n\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Index);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9wYWdlcy9pbmRleC5qcz80NGQ4Il0sIm5hbWVzIjpbIkluZGV4IiwiQ29tcG9uZW50IiwiY29tcG9uZW50RGlkTW91bnQiLCJyZXNwb25zZSIsImZhY3RvcnkiLCJtZXRob2RzIiwidmlld0Fzc2V0cyIsImNhbGwiLCJjb25zb2xlIiwibG9nIiwicmVuZGVyIl0sIm1hcHBpbmdzIjoiOzs7Ozs7QUFBQTtBQUNBOztBQUVBLE1BQU1BLEtBQU4sU0FBb0JDLCtDQUFwQixDQUE4QjtBQUMxQixRQUFNQyxpQkFBTixHQUEwQjtBQUN0QixVQUFNQyxRQUFRLEdBQUcsTUFBTUMseURBQU8sQ0FBQ0MsT0FBUixDQUFnQkMsVUFBaEIsR0FBNkJDLElBQTdCLEVBQXZCO0FBQ0FDLFdBQU8sQ0FBQ0MsR0FBUixDQUFZTixRQUFaO0FBQ0g7O0FBRURPLFFBQU0sR0FBRztBQUNMLFdBQ0k7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSw4QkFESjtBQUdIOztBQVZ5Qjs7QUFhZlYsb0VBQWYiLCJmaWxlIjoiLi9wYWdlcy9pbmRleC5qcy5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCwgeyBDb21wb25lbnQgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgZmFjdG9yeSBmcm9tICcuLy4uL2V0aGVyZXVtL2ZhY3RvcnknO1xuXG5jbGFzcyBJbmRleCBleHRlbmRzIENvbXBvbmVudCB7XG4gICAgYXN5bmMgY29tcG9uZW50RGlkTW91bnQoKSB7XG4gICAgICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgZmFjdG9yeS5tZXRob2RzLnZpZXdBc3NldHMoKS5jYWxsKCk7XG4gICAgICAgIGNvbnNvbGUubG9nKHJlc3BvbnNlKTtcbiAgICB9XG5cbiAgICByZW5kZXIoKSB7XG4gICAgICAgIHJldHVybiAoXG4gICAgICAgICAgICA8ZGl2PiBIZWxsbyBXb3JsZCBJbmRleCEgPC9kaXY+XG4gICAgICAgICk7XG4gICAgfVxufVxuXG5leHBvcnQgZGVmYXVsdCBJbmRleDsiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./pages/index.js\n");
+
+/***/ }),
+
+/***/ 4:
+/*!******************************!*\
+  !*** multi ./pages/index.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /home/kaustubh/Documents/blockchain/fyp/proj_dev/land_registration/pages/index.js */"./pages/index.js");
+
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "react" ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"react\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vZXh0ZXJuYWwgXCJyZWFjdFwiPzU4OGUiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEiLCJmaWxlIjoicmVhY3QuanMiLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IHJlcXVpcmUoXCJyZWFjdFwiKTsiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///react\n");
+
+/***/ }),
+
+/***/ "web3":
+/*!***********************!*\
+  !*** external "web3" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"web3\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vZXh0ZXJuYWwgXCJ3ZWIzXCI/NjFiNiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSIsImZpbGUiOiJ3ZWIzLmpzIiwic291cmNlc0NvbnRlbnQiOlsibW9kdWxlLmV4cG9ydHMgPSByZXF1aXJlKFwid2ViM1wiKTsiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///web3\n");
+
+/***/ })
+
+/******/ });
