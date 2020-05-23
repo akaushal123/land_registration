@@ -14,10 +14,8 @@ contract LandRegistration{
         reqStatus requestStatus;
     }
 
-
     //request status
     enum reqStatus {Default,pending,reject,approved}
-
 
     //profile of a client
     struct profiles{

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import factory from './../ethereum/factory';
+import LoginForm from '../components/LoginForm';
+import Layout from '../components/Layout';
 
 class Index extends Component {
     async componentDidMount() {
@@ -9,7 +11,10 @@ class Index extends Component {
 
     render() {
         return (
-            <div> Hello World Index! </div>
+            <Layout>
+                <LoginForm/>
+            </Layout>
+
         );
     }
 }
