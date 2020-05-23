@@ -19,6 +19,9 @@ class LayoutSuperAdmin extends Component {
                         <div className={styles.NavBox}>
                             <ul>
                                 <li>
+                                    <Link route="/superAdmin"><a href="#">Home</a></Link>
+                                </li>
+                                <li>
                                     <Link route="/superAdmin/addAdmin"><a href="#">Add Admin</a></Link>
                                 </li>
                                 <li>

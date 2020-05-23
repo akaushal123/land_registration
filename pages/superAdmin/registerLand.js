@@ -1,10 +1,58 @@
 import React, { Component } from 'react';
 import Layout from './../../components/Layout/LayoutSuperAdmin';
-import { Form, Button, Input } from 'semantic-ui-react';
+import { Form, Button, Input, Message } from 'semantic-ui-react';
 import styles from './registerLand.module.css';
-
+import factory from './../../ethereum/factory';
+import { Router } from '../../routes';
 
 class RegisterLand extends Component {
+
+    state = {
+        village : "",
+        district : "",
+        state : "",
+        ownerAddress : '',
+        buttonText : "Register!",
+        userAddress : "",
+        errorMessage : '',
+        surveyNumber : "",
+        marketValue : 0
+    }
+
+    async componentDidMount() {
+        const userAddress = await ethereum.selectedAddress;
+        this.setState({userAddress : userAddress});
+    }
+
+    register = async () => {
+        event.preventDefault();
+        try{
+            const computedId = await factory.methods.computeId(
+                this.state.state,this.state.district,this.state.village,
+                this.state.surveyNumber
+            ).call();
+
+            const assets = await factory.methods.viewAssets().call();
+
+            console.log(assets,computedId);
+
+            await factory.methods.Registration(
+                this.state.state,this.state.district,this.state.village,
+                this.state.surveyNumber,
+                this.state.ownerAddress,
+                this.state.marketValue,
+                computedId
+                )
+                .send({
+                from : this.state.userAddress
+            });
+            this.setState({buttonText : "Registered!!!"});
+            Router.pushRoute('/superAdmin');
+        }catch(err) {
+            this.setState({errorMessage : err.message.slice(0,50)});
+        }
+    }
+
     render() {
         return (
             <Layout>
@@ -12,32 +60,56 @@ class RegisterLand extends Component {
                         <div className={styles.HeaderText}>
                             <h1 className={styles.HeroText}> Register Land </h1>
                         </div>
-                        <Form className={styles.AddForm}>
+                        <Form className={styles.AddForm} onSubmit={this.register} error={!!this.state.errorMessage}>
                             <Form.Field>
                                 <label>Village</label>
-                                <Input type="text" required />
+                                <Input 
+                                required 
+                                value={this.state.village} 
+                                onChange={event => this.setState({village : event.target.value})}
+                                />
                             </Form.Field>
                             <Form.Field>
                                 <label>District</label>
-                                <Input type="text" required />
+                                <Input 
+                                value={this.state.district} 
+                                onChange={event => this.setState({district : event.target.value})}
+                                />
                             </Form.Field>
                             <Form.Field>
                                 <label>State</label>
-                                <Input type="text" required />
+                                <Input 
+                                value={this.state.state} 
+                                onChange={event => this.setState({state : event.target.value})}
+                                />
                             </Form.Field>
                             <Form.Field>
                                 <label>Survey Number</label>
-                                <Input type="number" required />
+                                <Input  
+                                type="number"
+                                value={this.state.surveyNumber}
+                                onChange={event => this.setState({surveyNumber : event.target.value})} />
                             </Form.Field>
                             <Form.Field>
-                                <label>Owner Address</label>
-                                <Input label="addrress" labelPosition="right" required />
+                                <label>Owner's Address</label>
+                                <Input 
+                                required 
+                                label="addrress" 
+                                labelPosition="right" 
+                                value={this.state.ownerAddress}
+                                onChange={event => this.setState({ownerAddress : event.target.value})}/>
                             </Form.Field>
                             <Form.Field>
                                 <label>Market Value</label>
-                                <Input  />
+                                <Input  
+                                label="ether"
+                                labelPosition="right"
+                                type="number"
+                                value={this.state.marketValue}
+                                onChange={event => this.setState({marketValue : event.target.value})} />
                             </Form.Field>
-                            <Button primary>Register</Button>
+                            <Message error header="Oops!" content={this.state.errorMessage} />
+                            <Button primary> {this.state.buttonText} </Button>
                         </Form>
                 </section>
             </Layout>

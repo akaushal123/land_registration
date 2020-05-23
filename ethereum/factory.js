@@ -1,11 +1,11 @@
 import web3 from './web3';
 import LandRegistration from './build/LandRegistration.json';
 
-const address = '0x0dd48Ba4Dc9e058471e9B5F57B6A41ACbE345f69';
+const address = '0x77c897082c85db44d17e4106f923836451e45b23';
 
 const instance = new web3.eth.Contract(
     LandRegistration.interface,
-    '0x0dd48Ba4Dc9e058471e9B5F57B6A41ACbE345f69'
+    address
 );
 
 export default instance;

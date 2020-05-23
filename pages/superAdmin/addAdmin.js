@@ -1,27 +1,39 @@
 import React, { Component } from 'react';
 import Layout from './../../components/Layout/LayoutSuperAdmin';
-import { Form, Button, Input } from 'semantic-ui-react';
+import { Form, Button, Input, Message } from 'semantic-ui-react';
 import styles from './addAdmin.module.css';
 import factory from './../../ethereum/factory';
 import web3 from './../../ethereum/factory';
+import { Router } from '../../routes';
 
 class AddAdmin extends Component {
-
-    static getInitialProps() {
-        const userAddress = ethereum.selectedAddress;
-        return { userAddress };
-    }
 
     state = {
         village : "",
         district : "",
         state : "",
-        adminAddress : "",
+        adminAddress : '',
+        buttonText : "Assign!",
+        userAddress : "",
+        errorMessage : ''
     }
 
-    onSubmit = (event) => {
+    async componentDidMount() {
+        const userAddress = await ethereum.selectedAddress;
+        this.setState({userAddress : userAddress});
+    }
+
+    onSubmit = async () => {
         event.preventDefault();
-        
+        try{
+            await factory.methods.addSuperAdmin(this.state.adminAddress,this.state.village).send({
+                from : this.state.userAddress
+            });
+            this.setState({buttonText : "Added!!!"});
+            Router.pushRoute('/superAdmin');
+        }catch(err) {
+            this.setState({errorMessage : err.message.slice(0,50)});
+        }
     }
 
     render() {
@@ -31,7 +43,7 @@ class AddAdmin extends Component {
                         <div className={styles.HeaderText}>
                             <h1 className={styles.HeroText}> Add Admin </h1>
                         </div>
-                        <Form className={styles.AddForm}>
+                        <Form className={styles.AddForm} onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                             <Form.Field>
                                 <label>Village</label>
                                 <Input 
@@ -55,14 +67,16 @@ class AddAdmin extends Component {
                                 />
                             </Form.Field>
                             <Form.Field>
-                                <label value={this.state.adminAddress}>Admin Address</label>
+                                <label>Admin Address</label>
                                 <Input 
                                 required 
                                 label="addrress" 
                                 labelPosition="right" 
+                                value={this.state.adminAddress}
                                 onChange={event => this.setState({adminAddress : event.target.value})}/>
                             </Form.Field>
-                            <Button primary onClick={this.onSubmit}>Assign!</Button>
+                            <Message error header="Oops!" content={this.state.errorMessage} />
+                            <Button primary> {this.state.buttonText} </Button>
                         </Form>
                 </section>
             </Layout>

@@ -3,6 +3,11 @@ import Layout from './../../components/Layout/LayoutSuperAdmin';
 import styles from './index.module.css';
 
 class Index extends Component {
+    
+    connectEthereum = () => {
+        ethereum.enable();
+    }
+
     render() {
         return (
             <Layout>
@@ -12,6 +17,7 @@ class Index extends Component {
                             <span className={styles.HeroText__sub1}> Welcome to Online Land Registration </span>
                             <span className={styles.HeroText__sub2}> and Transfer of entitlement</span>
                             <span className={styles.HeroText__sub3}> SuperAdmin </span>
+                            <span className={styles.HeroText__sub4} onClick={this.connectEthereum}> Connect To Etherum</span>
                         </h1>
                     </div>
                 </section>
