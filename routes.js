@@ -1,6 +1,6 @@
 const routes =  require("next-routes")();
 
 routes
-    .add('/');
+    .add('/', '/index');
 
 module.exports = routes;
