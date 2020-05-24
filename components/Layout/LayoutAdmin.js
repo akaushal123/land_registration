@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from '../../routes';
 import Head from 'next/head';
-import styles from './LayoutSuperAdmin.module.css';
+import styles from './LayoutAdmin.module.css';
 import { Container, StepTitle } from 'semantic-ui-react';
 
 class LayoutSuperAdmin extends Component {

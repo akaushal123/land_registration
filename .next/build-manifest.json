@@ -20,19 +20,11 @@
     "/_polyfills": [
       "static/runtime/polyfills.js"
     ],
-    "/admin": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
     "/admin/explore": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/admin/registerLand": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
-    "/superAdmin/registerLand": [
+    "/superAdmin/addAdmin": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ]

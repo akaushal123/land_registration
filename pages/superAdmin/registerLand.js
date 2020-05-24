@@ -32,8 +32,6 @@ class RegisterLand extends Component {
                 this.state.surveyNumber
             ).call();
 
-            const assets = await factory.methods.viewAssets().call();
-
             console.log(assets,computedId);
 
             await factory.methods.Registration(
