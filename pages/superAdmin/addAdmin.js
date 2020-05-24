@@ -4,6 +4,7 @@ import { Form, Button, Input, Message } from 'semantic-ui-react';
 import styles from './addAdmin.module.css';
 import factory from './../../ethereum/factory';
 import web3 from './../../ethereum/web3';
+import firebase from "../../components/firebaseAuth";
 import { Router } from '../../routes';
 
 class AddAdmin extends Component {
@@ -26,11 +27,28 @@ class AddAdmin extends Component {
     onSubmit = async () => {
         event.preventDefault();
         try{
+            if(!this.state.userAddress){
+                throw new Error("Plese Connect to Ethereum first");
+            }
             await factory.methods.addAdmin(this.state.adminAddress,this.state.village).send({
                 from : this.state.userAddress
             });
+
+            var db = firebase.firestore();
+            db.collection("UserRoles")
+                .doc(this.state.userAddress)
+                .set({
+                    address : this.state.userAddress,
+                    role : "admin"
+                })
+                .then(function() {
+                    console.log("Admin Added");
+                })
+                .catch(function(error){
+                    console.error("Error adding admin : ",error);
+                });
             this.setState({buttonText : "Added!!!"});
-            Router.pushRoute('/superAdmin');
+            //Router.pushRoute('/superAdmin');
         }catch(err) {
             this.setState({errorMessage : err.message.slice(0,50)});
         }

@@ -6,7 +6,7 @@ export default () =>{
     return (
         <Menu style={{marginTop: '20px'}}>
             <Link route="/">
-                <a className={"item"}><img src={"../static/logo.png"} alt={'logo'}/></a>
+                <a className={"item"}><img style={{height:"40px"}} src={"../static/tiranga_national_emblem.png"} alt={'logo'}/></a>
             </Link>
 
             <Menu.Menu position={"right"}>

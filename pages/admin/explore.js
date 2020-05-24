@@ -40,14 +40,14 @@ class Explore extends Component {
                 requestStatus : ""
             };
 
-            console.log(this.state.userAddress);
-            const assets = await factory.methods.viewAssets().call({
-                from : this.state.userAddress
-            });
+            //console.log(this.state.userAddress);
+            //const assets = await factory.methods.viewAssets().call({
+            //    from : this.state.userAddress
+            //});
             const info = await factory.methods.landInfoAdmin(computedId).call();
             
             if(info[0] == "0x0000000000000000000000000000000000000000") {
-                console.log("inside");
+                //console.log("inside");
                 throw new Error("No such record");
             }
 

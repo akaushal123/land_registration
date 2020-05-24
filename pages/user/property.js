@@ -6,16 +6,16 @@ import {Link} from '../../routes';
 
 class Property extends Component{
 
-     async componentDidMount() {
-         try{
-             console.log(ethereum.selectedAddress);
-             const property = await factory.methods.viewAssets().call();
-             console.log('property', property);
-             return {property};
-         } catch(e){
-             console.log(e);
-         }
-     }
+    async componentDidMount() {
+        try{
+            console.log(ethereum.selectedAddress);
+            const property = await factory.methods.viewAssets().call();
+            console.log('property', property);
+            return {property};
+        } catch(e){
+            console.log(e);
+        }
+    }
 
      renderProperties() {
          const properties = this.props.property.map(surveyId => {
