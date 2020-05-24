@@ -17,6 +17,8 @@ class Explore extends Component {
         loading : false
     }
 
+    reqStatus = ["Not set","Pending","Reject","Approved"];
+
     async componentDidMount() {
         const userAddress = await ethereum.selectedAddress;
         this.setState({userAddress : userAddress});
@@ -160,7 +162,7 @@ class Explore extends Component {
                                         <h3 className={["ui","header"].join(' ')}>Survey Number : {this.state.surveyNumber} </h3>
                                         <h3 className={["ui","header"].join(' ')}>Is Available : {this.state.landInfo.isAvailable} </h3>
                                         <h3 className={["ui","header"].join(' ')}>Requester : {this.state.landInfo.requester} </h3>
-                                        <h3 className={["ui","header"].join(' ')}>Request Status : {this.state.landInfo.requestStatus} </h3>
+                                        <h3 className={["ui","header"].join(' ')}>Request Status : {this.reqStatus[this.state.landInfo.requestStatus]} </h3>
                                     </div>
                                 </div>
                             </div>
