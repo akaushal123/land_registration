@@ -18,7 +18,6 @@ contract LandRegistration{
     //request status
     enum reqStatus {Default,pending,reject,approved}
 
-
     //profile of a client
     struct profiles{
         uint[] assetList;
@@ -26,29 +25,29 @@ contract LandRegistration{
 
 
     mapping(uint => landDetails) land;
-    address owner;
-    mapping(string => address) superAdmin;
+    address superAdmin;
+    mapping(string => address) admin;
     mapping(address => profiles) profile;
 
     //contract owner
     constructor() public{
-        owner = msg.sender;
+        superAdmin = msg.sender;
     }
-    modifier onlyOwner {
-        require(msg.sender == owner);
+    modifier onlySuperAdmin {
+        require(msg.sender == superAdmin);
         _;
     }
 
     //adding village admins
-    function addSuperAdmin(address _superAdmin,string memory _village ) onlyOwner public {
-        superAdmin[_village]=_superAdmin;
+    function addAdmin(address _admin,string memory _village ) onlySuperAdmin public {
+        admin[_village]=_admin;
     }
     //Registration of land details.
     function Registration(string memory _state,string memory _district,
         string memory _village,uint256 _surveyNumber,
         address payable _OwnerAddress,uint _marketValue,uint id
     ) public returns(bool) {
-        require(superAdmin[_village] == msg.sender || owner == msg.sender);
+        require(admin[_village] == msg.sender || superAdmin == msg.sender);
         land[id].state = _state;
         land[id].district = _district;
         land[id].village = _village;
@@ -62,6 +61,11 @@ contract LandRegistration{
     function landInfoOwner(uint id) public view returns(string memory,string memory,string memory,uint256,bool,address,reqStatus){
         return(land[id].state,land[id].district,land[id].village,land[id].surveyNumber,land[id].isAvailable,land[id].requester,land[id].requestStatus);
     }
+    
+    function landInfoAdmin(uint id) public view returns(address,bool,address,reqStatus){
+        return(land[id].CurrentOwner,land[id].isAvailable,land[id].requester,land[id].requestStatus);
+    }
+    
     //to view details of land for the buyer
     function landInfoUser(uint id) public view returns(address,uint,bool,address,reqStatus){
         return(land[id].CurrentOwner,land[id].marketValue,land[id].isAvailable,land[id].requester,land[id].requestStatus);

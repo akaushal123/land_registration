@@ -4,7 +4,7 @@ import Head from 'next/head';
 import styles from './LayoutAdmin.module.css';
 import { Container, StepTitle } from 'semantic-ui-react';
 
-class LayoutSuperAdmin extends Component {
+class LayoutAdmin extends Component {
     render() {
         return (
             <Container>
@@ -42,4 +42,4 @@ class LayoutSuperAdmin extends Component {
     }
 }
 
-export default LayoutSuperAdmin;
+export default LayoutAdmin;

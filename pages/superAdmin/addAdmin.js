@@ -3,15 +3,15 @@ import Layout from './../../components/Layout/LayoutSuperAdmin';
 import { Form, Button, Input, Message } from 'semantic-ui-react';
 import styles from './addAdmin.module.css';
 import factory from './../../ethereum/factory';
-import web3 from './../../ethereum/factory';
+import web3 from './../../ethereum/web3';
 import { Router } from '../../routes';
 
 class AddAdmin extends Component {
 
     state = {
-        village : "",
-        district : "",
-        state : "",
+        village : "v1",
+        district : "d1",
+        state : "s1",
         adminAddress : '',
         buttonText : "Assign!",
         userAddress : "",
@@ -26,7 +26,7 @@ class AddAdmin extends Component {
     onSubmit = async () => {
         event.preventDefault();
         try{
-            await factory.methods.addSuperAdmin(this.state.adminAddress,this.state.village).send({
+            await factory.methods.addAdmin(this.state.adminAddress,this.state.village).send({
                 from : this.state.userAddress
             });
             this.setState({buttonText : "Added!!!"});

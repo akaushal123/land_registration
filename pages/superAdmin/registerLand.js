@@ -8,9 +8,9 @@ import { Router } from '../../routes';
 class RegisterLand extends Component {
 
     state = {
-        village : "",
-        district : "",
-        state : "",
+        village : "v1",
+        district : "d1",
+        state : "s1",
         ownerAddress : '',
         buttonText : "Register!",
         userAddress : "",
@@ -31,8 +31,6 @@ class RegisterLand extends Component {
                 this.state.state,this.state.district,this.state.village,
                 this.state.surveyNumber
             ).call();
-
-            console.log(assets,computedId);
 
             await factory.methods.Registration(
                 this.state.state,this.state.district,this.state.village,
