@@ -6,31 +6,35 @@ import {Link} from '../../routes';
 
 class Property extends Component{
 
+    state = {
+        loaded: false,
+        properties: []
+    };
+
      async componentDidMount() {
-         try{
-             console.log(ethereum.selectedAddress);
-             const property = await factory.methods.viewAssets().call();
-             console.log('property', property);
-             return {property};
-         } catch(e){
-             console.log(e);
-         }
+         const properties = await factory.methods.viewAssets().call({
+             from: ethereum.selectedAddress
+         });
+         this.setState({loaded: true, properties});
+         return {properties};
      }
 
      renderProperties() {
-         const properties = this.props.property.map(surveyId => {
-             return {
-                 header: surveyId,
-                 description: (
-                     <Link route={`/explore/${surveyId}`}>
-                         <a>View Property</a>
-                     </Link>
-                 ),
-                 fluid:true,
-                 style: {overflowWrap: 'break-word'}
-             };
-         });
-         return <Card.Group items={properties}/>;
+         console.log('yes');
+         // if(this.props.properties){
+             const properties = this.state.properties.map(surveyId => {
+                 return {
+                     header: surveyId,
+                     description: (
+                         <Link route={`/explore/${surveyId}`}>
+                             <a>View Property</a>
+                         </Link>
+                     ),
+                     fluid:true,
+                     style: {overflowWrap: 'break-word'}
+                 };
+             });
+             return <Card.Group items={properties}/>;
      }
 
      render() {

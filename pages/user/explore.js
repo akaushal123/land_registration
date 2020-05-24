@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
-import {Input, Card, Search, Grid, Form, Icon} from "semantic-ui-react";
+import {Input, Card, Search, Grid, Form, Icon, Container, Button} from "semantic-ui-react";
 import web3 from '../../ethereum/web3';
+import {RequestSale} from "../../components/user/RequestSale";
 import Layout from "../../components/Layout";
 import SearchResult from "../../components/user/SearchResult";
 import Link from "next/link";
 
-class ExploreProperty extends Component{
+class ExploreProperty extends Component {
 
     state = {
         value: '',
@@ -17,7 +18,8 @@ class ExploreProperty extends Component{
         marketValue: null,
         isAvailable: null,
         requester: '',
-        requestStatus: null
+        requestStatus: null,
+        searched: ''
     };
 
     renderSearchCard() {
@@ -57,16 +59,19 @@ class ExploreProperty extends Component{
         return <Card.Group items={items}/>;
     }
 
-    onSubmit = async () => {
+    onSubmit = async (event) => {
+        event.preventDefault();
         this.setState({loading: true, errorMessage: ''});
-        try{
+        try {
             const ownerDetails = await factory.methods.landInfoUser(this.state.value).call();
-            const currentOwner = ownerDetails[0],  marketValue = ownerDetails[1], isAvailable = ownerDetails[2], requester = ownerDetails[3], requestStatus = ownerDetails[4] ;
-            this.setState({currentOwner, marketValue, isAvailable, requester, requestStatus});
+            const currentOwner = ownerDetails[0], marketValue = ownerDetails[1], isAvailable = ownerDetails[2],
+                requester = ownerDetails[3], requestStatus = ownerDetails[4];
+            const searched = this.state.value;
+            this.setState({currentOwner, marketValue, isAvailable, requester, requestStatus, searched});
             this.renderSearchCard();
-            this.setState({loaded:true});
+            this.setState({loaded: true});
 
-        } catch(err){
+        } catch (err) {
             this.setState({error: err.message});
         }
         this.setState({loading: false, value: ''});
@@ -75,38 +80,39 @@ class ExploreProperty extends Component{
 
 
     render() {
-      return (
-          <Layout>
-              <h3 aligntext={'center'}>Search Property</h3>
-              <Form onSubmit={this.onSubmit}>
-                  <Form.Input
-                      icon={<Icon name='search' inverted circular />} loading={this.state.loading} value={this.state.value}
-                      placeholder='Search...' onChange={event => this.setState({value:event.target.value})}
-                  />
-              </Form>
+        return (
+            <Layout>
+                <h3 aligntext={'center'}>Search Property</h3>
+                <Form onSubmit={this.onSubmit}>
+                    <Form.Input
+                        icon={<Icon name='search' inverted circular/>} loading={this.state.loading}
+                        value={this.state.value}
+                        placeholder='Search...(Enter property ID)'
+                        onChange={event => this.setState({value: event.target.value})}
+                    />
+                </Form>
 
-              <br/>
-              <br/>
+                <br/>
+                <br/>
 
-              {this.state.loaded ? (
-                  <Grid>
-                      <Grid.Row>
-                          <Grid.Column width={10}>
-                              {this.renderSearchCard()}
-                          </Grid.Column>
-                          <Grid.Column width={6}>
-                              Request for sale
-                          </Grid.Column>
-                      </Grid.Row>
-                      <Grid.Row>
-                          <Grid.Column>
-                              xyz
-                          </Grid.Column>
-                      </Grid.Row>
-                  </Grid>
-              ) : null}
-          </Layout>
-      );
+                {this.state.loaded ? (
+                    <Container>
+                        <Grid>
+                            <Grid.Row>
+                                <Grid.Column>
+                                    {this.renderSearchCard()}
+                                </Grid.Column>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Grid.Column>
+                                    <RequestSale isAvailable={this.state.isAvailable} id={this.state.searched}/>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
+                    </Container>
+                ) : null}
+            </Layout>
+        );
     }
 }
 

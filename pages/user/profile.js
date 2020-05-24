@@ -26,7 +26,27 @@ class profile extends Component {
     async componentDidMount() {
         const userAddress = await ethereum.selectedAddress;
         this.setState({etherAddress: userAddress});
+
+        //TODO yeh kaam to kr rha h but state me nhi ho pa rh h,fetch ho rha h database se data but show nhi ho rha h
+        //Retriving data from firestore
+       /* var db = firebase.firestore();
+        let firstName , middleName, lastName, gender, email, contact, building, street, state, region ;
+        db.collection("UserData").doc(userAddress).get().then(function(doc) {
+            if (doc.exists) {
+                 firstName , middleName, lastName, gender, email, contact, building, street, state, region  = doc.data();
+                this.setState({ firstName: firstName , middleName: middleName, lastName: lastName, gender:gender,
+                    email: email, contact: contact, building: building, street: street, state: street, region: region});
+                console.log("Document data:", doc.data());
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+*/
     }
+
     onSubmit = (event)=> {
         event.preventDefault();
         var db = firebase.firestore();
