@@ -11,7 +11,10 @@ export default () =>{
 
             <Menu.Menu position={"right"}>
                 <Link route={'/user'}>
-                    <a className={'item'}>User</a>
+                    <a className={'item'}>Profile</a>
+                </Link>
+                <Link route={'/user/property'}>
+                    <a className={'item'}>Property</a>
                 </Link>
                 <Link route={'/explore'}>
                     <a className={'item'}>Explore</a>

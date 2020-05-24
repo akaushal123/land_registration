@@ -1,23 +1,71 @@
 import React, {Component} from 'react';
-import {Form, Grid, Header, Button} from 'semantic-ui-react';
+import {Form, Grid, Header, Button, Message} from 'semantic-ui-react';
 import Layout from '../../components/Layout'
+import factory from '../../ethereum/factory';
 import Head from "next/head";
-
+import firebase from '../../components/firebaseAuth';
 
 class profile extends Component {
 
     state = {
         etherAddress: '',
         firstName: '',
+        middleName: '',
         lastName: '',
         gender: '',
         email: '',
-        phoneNumber: '',
+        contact: '',
         building: '',
         street: '',
         state: '',
         region: '',
+        render: false,
+        success: '',
     };
+
+    async componentDidMount() {
+        const userAddress = await ethereum.selectedAddress;
+        this.setState({etherAddress: userAddress});
+    }
+    onSubmit = (event)=> {
+        event.preventDefault();
+        var db = firebase.firestore();
+        db.collection("UserData").doc(this.state.etherAddress).set({
+            etherAddress: this.state.etherAddress,
+            firstName: this.state.firstName,
+            middleName: this.state.middleName,
+            lastName: this.state.lastName,
+            gender: this.state.gender,
+            email: this.state.email,
+            contact: this.state.contact,
+            building: this.state.building,
+            street: this.state.street,
+            state: this.state.state,
+            region: this.state.region,
+        })
+            .then(function () {
+                console.log("Document written with ID");
+                // this.setState({render:true, success:true});
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+                // this.setState({render: true,success:false});
+            });
+    };
+
+    // renderMessage() {
+    //     return ( this.state.success ?
+    //                 <Message
+    //                     success
+    //                     header='Success'
+    //                     content='Data updated successfully'
+    //                 /> :
+    //                 <Message error
+    //                              header='Error'
+    //                              content='Data not updated'
+    //                 />
+    //     );
+    // }
 
     render() {
         const genderOptions = [
@@ -37,7 +85,6 @@ class profile extends Component {
                 value: 'Other'
             },
         ];
-        const {state, region} = this.state;
         return (
             <Layout>
                 <Head>
@@ -49,34 +96,51 @@ class profile extends Component {
 
                     <Grid textAlign={'center'} style={{height: '100vh'}}>
                         <Grid.Column style={{maxWidth: '80vw'}}>
-                            <Form size={'medium'}>
+
+                            <Form size={'small'} onSubmit={this.onSubmit}>
                                 <Header size={'medium'}>Ether Details</Header>
-                                <Form.Input fluid placeholder={'Ether Address'} label={'Ether Address'} required/>
+                                <Form.Input fluid label={'Ether Address'} required
+                                            value={this.state.etherAddress} disabled/>
                                 <Header size={'medium'}>Personal Information</Header>
+
                                 <Form.Group widths='equal'>
-                                    <Form.Input fluid placeholder={'First Name'} label={'First Name'} required/>
-                                    <Form.Input fluid placeholder={'Middle Name'} label={'Middle Name'}/>
-                                    <Form.Input fluid placeholder={'Last Name'} label={'Last Name'} required/>
+                                    <Form.Input fluid placeholder={'First Name'} label={'First Name'} required
+                                                onChange={event => this.setState({firstName: event.target.value})}/>
+                                    <Form.Input fluid placeholder={'Middle Name'} label={'Middle Name'}
+                                                onChange={event => this.setState({middleName: event.target.value})}/>
+
+                                    <Form.Input fluid placeholder={'Last Name'} label={'Last Name'} required
+                                                onChange={event => this.setState({lastName: event.target.value})}
+                                    />
                                 </Form.Group>
                                 <Form.Group widths={'equal'}>
-                                    <Form.Dropdown fluid placeholder={'Gender'} label={'Gender'} selection
-                                                   options={genderOptions}/>
-                                    <Form.Input fluid placeholder={'Email Address'} label='Email' required
-                                                type={'email'}/>
-                                    <Form.Input fluid placeholder={'Contact'} required label='Contact Number'
-                                                type={'number'}/>
+                                    <Form.Select fluid placeholder={'Gender'} label={'Gender'} selection
+                                                   options={genderOptions} value={this.state.gender}
+                                                    onChange={(event,data) => {this.setState({gender: data.value})}}/>
+
+                                    <Form.Input fluid placeholder={'Email Address'} label='Email' required type={'email'}
+                                                onChange={event => {this.setState({email: event.target.value})}}/>
+
+                                    <Form.Input fluid placeholder={'Contact'} required label='Contact Number' type={'number'}
+                                    onChange={event => {this.setState({contact: event.target.value})}}/>
                                 </Form.Group>
+
                                 <Header size={'medium'}>Address detail</Header>
                                 <Form.Group widths={'equal'}>
-                                    <Form.Input fluid placeholder={'Building Number'} label={'Building Number'}/>
-                                    <Form.Input fluid placeholder={'Street'} label={'Street'}/>
+                                    <Form.Input fluid placeholder={'Building Number'} label={'Building Number'} required
+                                    onChange={event => this.setState({building: event.target.value})}/>
+                                    <Form.Input fluid placeholder={'Street'} label={'Street'} required
+                                    onChange={event => this.setState({street: event.target.value})}/>
                                 </Form.Group>
+
                                 <Form.Group widths={'equal'}>
                                     <input type="hidden" name="country" id="countryId" value="IN"/>
-                                    <select name="state" className="states order-alpha" id="stateId">
+                                    <select name="state" value={this.state.state} className="states order-alpha" id="stateId"
+                                            onChange={event => this.setState({state: event.target.value})}>
                                         <option value="">Select State</option>
                                     </select>
-                                    <select name="city" className="cities order-alpha" id="cityId">
+                                    <select name="city" value={this.state.city} className="cities order-alpha" id="cityId"
+                                            onChange={event=>this.setState({region: event.target.value})}>
                                         <option value="">Select City</option>
                                     </select>
 
@@ -86,8 +150,8 @@ class profile extends Component {
                                         Update Profile
                                     </Button>
                                 </Form.Group>
-
                             </Form>
+                            {/*{this.state.render ? this.renderMessage() : null}*/}
                         </Grid.Column>
                     </Grid>
                 </div>
