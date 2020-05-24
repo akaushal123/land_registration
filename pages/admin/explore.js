@@ -6,18 +6,15 @@ import { Form, Button, Input, Message } from 'semantic-ui-react';
 
 class Explore extends Component {
     state = {
-        village : "",
-        district : "",
-        state : "",
+        village : "v2",
+        district : "d1",
+        state : "s1",
         address : "",
         userAddress : "",
-        surveyNumber : "",
+        surveyNumber : "123",
         errorMessage : '',
-        landInfo : {
-            isAvailable : "",
-            requester : "",
-            requestStatus : ""
-        }
+        landInfo : null,
+        loading : false
     }
 
     async componentDidMount() {
@@ -28,24 +25,33 @@ class Explore extends Component {
     searchLand = async () => {
         event.preventDefault();
         try{
+            this.setState({loading : true});
             const computedId = await factory.methods.computeId(
                 this.state.state,this.state.district,this.state.village,
                 this.state.surveyNumber
             ).call();
             
             const landInfo = {
+                currentOwner : "",
                 isAvailable : "",
                 requester : "",
                 requestStatus : ""
             };
 
-            const info = await factory.methods.landInfoOwner(computedId).call();
+            const info = await factory.methods.landInfoAdmin(computedId).call();
             
-            landInfo[isAvailable] = info[4];
-            landInfo[requester] = info[5];
-            landInfo[requestStatus] = info[6];
+            if(!info) {
+                throw new Error("No such record");
+            }
+
+            landInfo.currentOwner = info[0];
+            landInfo.isAvailable = info[1] ? "true" : "false";
+            landInfo.requester = info[2];
+            landInfo.requestStatus = info[3];
             
-            this.setState({landInfo});
+            console.log(landInfo);
+
+            this.setState({landInfo : landInfo , loading : false});
             
         }catch(err) {
         }
@@ -65,8 +71,8 @@ class Explore extends Component {
                         </div>
                         
                         <Form className={styles.AddForm} onSubmit={this.searchLand} error={!!this.state.errorMessage}>
-                            <div class="ui grid">
-                                <div class="three wide column">
+                            <div className={["ui","grid"].join(' ')}>
+                                <div className={["three","wide","column"].join(' ')}>
                                     <Form.Field className={styles.SearchField}>
                                         <label>Village</label>
                                         <Input 
@@ -76,7 +82,7 @@ class Explore extends Component {
                                         />
                                     </Form.Field>
                                 </div>
-                                <div class="three wide column">
+                                <div className={["three","wide","column"].join(' ')}>
                                     <Form.Field>
                                         <label>District</label>
                                         <Input 
@@ -85,7 +91,7 @@ class Explore extends Component {
                                         />
                                     </Form.Field>
                                 </div>
-                                <div class="three wide column">
+                                <div className={["three","wide","column"].join(' ')}>
                                 <Form.Field>
                                     <label>State</label>
                                     <Input 
@@ -94,7 +100,7 @@ class Explore extends Component {
                                     />
                                 </Form.Field>
                                 </div>
-                                <div class="three wide column">
+                                <div className={["three","wide","column"].join(' ')}>
                                 <Form.Field>
                                     <label>Survey Number</label>
                                     <Input 
@@ -103,10 +109,10 @@ class Explore extends Component {
                                     />
                                 </Form.Field>
                                 </div>
-                                <div class="four wide column">
+                                <div className={["four","wide","column"].join(' ')}>
                                     <div className={styles.BtnSearch}>
                                         <Message error header="Oops!" content={this.state.errorMessage} />
-                                        <Button primary> Search </Button>
+                                        <Button primary loading={this.state.loading}> Search </Button>
                                     </div>
                                 </div>
                             </div>                        
@@ -118,8 +124,8 @@ class Explore extends Component {
                             <h1 className={styles.HeroText}> Search Any User </h1>
                         </div>
                         <Form className={styles.AddForm} onSubmit={this.searchUser} error={!!this.state.errorMessage}>
-                            <div class="ui grid">
-                                <div class="seven wide column">
+                            <div className={["ui","grid"].join(' ')}>
+                                <div className={["seven","wide","column"].join(' ')}>
                                     <Form.Field className={styles.SearchField}>
                                         <label>User Ethereum Address</label>
                                         <Input 
@@ -130,7 +136,7 @@ class Explore extends Component {
                                     </Form.Field>
                                 </div>
                                 
-                                <div class="four wide column">
+                                <div className={["four","wide","column"].join(' ')}>
                                     <div className={styles.BtnSearch}>
                                         <Message error header="Oops!" content={this.state.errorMessage} />
                                         <Button primary> Search </Button>
@@ -139,6 +145,29 @@ class Explore extends Component {
                             </div>                        
                         </Form>
                     </div>
+                
+                    { this.state.landInfo!==null ? 
+                    <div className={styles.LandInfoCard}>
+                        <div className={["ui","cards"].join(' ')}>
+                            <div style={{wordWrap : "break-word", width : "70%"}} className="card">
+                                <div className="content">
+                                    <div className="header">Currnet Owner's Address</div>
+                                    <div className="meta">{this.state.landInfo.currentOwner}</div>
+                                    <div className="description">
+                                        <h3 className={["ui","header"].join(' ')}>Village : {this.state.village} </h3>
+                                        <h3 className={["ui","header"].join(' ')}>District : {this.state.district} </h3>
+                                        <h3 className={["ui","header"].join(' ')}>State : {this.state.state} </h3>
+                                        <h3 className={["ui","header"].join(' ')}>Survey Number : {this.state.surveyNumber} </h3>
+                                        <h3 className={["ui","header"].join(' ')}>Is Available : {this.state.landInfo.isAvailable} </h3>
+                                        <h3 className={["ui","header"].join(' ')}>Requester : {this.state.landInfo.requester} </h3>
+                                        <h3 className={["ui","header"].join(' ')}>Request Status : {this.state.landInfo.requestStatus} </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        : null
+                    }
                 </section>
             </Layout>
         );
