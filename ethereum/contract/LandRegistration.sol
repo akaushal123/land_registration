@@ -58,6 +58,7 @@ contract LandRegistration{
         profile[_OwnerAddress].assetList.push(id);
         return true;
     }
+
     //to view details of land for the owner
     function landInfoOwner(uint id) public view returns(string memory,string memory,string memory,uint256,bool,address,reqStatus){
         return(land[id].state,land[id].district,land[id].village,land[id].surveyNumber,land[id].isAvailable,land[id].requester,land[id].requestStatus);
@@ -84,14 +85,17 @@ contract LandRegistration{
         land[id].isAvailable=false;
         land[id].requestStatus = reqStatus.pending; //changes the status to pending.
     }
+
     //will show assets of the function caller
     function viewAssets()public view returns(uint[] memory){
         return (profile[msg.sender].assetList);
     }
+
     //viewing request for the lands
     function viewRequest(uint property)public view returns(address){
         return(land[property].requester);
     }
+
     //processing request for the land by accepting or rejecting
     function processRequest(uint property,reqStatus status)public {
         require(land[property].CurrentOwner == msg.sender);

@@ -54,19 +54,55 @@ class profile extends Component {
       });
   };
 
-  // renderMessage() {
-  //     return ( this.state.success ?
-  //                 <Message
-  //                     success
-  //                     header='Success'
-  //                     content='Data updated successfully'
-  //                 /> :
-  //                 <Message error
-  //                              header='Error'
-  //                              content='Data not updated'
-  //                 />
-  //     );
-  // }
+    async componentDidMount() {
+        const userAddress = await ethereum.selectedAddress;
+        this.setState({etherAddress: userAddress});
+
+        //TODO yeh kaam to kr rha h but state me nhi ho pa rh h,fetch ho rha h database se data but show nhi ho rha h
+        //Retriving data from firestore
+       /* var db = firebase.firestore();
+        let firstName , middleName, lastName, gender, email, contact, building, street, state, region ;
+        db.collection("UserData").doc(userAddress).get().then(function(doc) {
+            if (doc.exists) {
+                 firstName , middleName, lastName, gender, email, contact, building, street, state, region  = doc.data();
+                this.setState({ firstName: firstName , middleName: middleName, lastName: lastName, gender:gender,
+                    email: email, contact: contact, building: building, street: street, state: street, region: region});
+                console.log("Document data:", doc.data());
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+*/
+    }
+
+    onSubmit = (event)=> {
+        event.preventDefault();
+        var db = firebase.firestore();
+        db.collection("UserData").doc(this.state.etherAddress).set({
+            etherAddress: this.state.etherAddress,
+            firstName: this.state.firstName,
+            middleName: this.state.middleName,
+            lastName: this.state.lastName,
+            gender: this.state.gender,
+            email: this.state.email,
+            contact: this.state.contact,
+            building: this.state.building,
+            street: this.state.street,
+            state: this.state.state,
+            region: this.state.region,
+        })
+            .then(function () {
+                console.log("Document written with ID");
+                // this.setState({render:true, success:true});
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+                // this.setState({render: true,success:false});
+            });
+    };
 
   render() {
     const genderOptions = [
