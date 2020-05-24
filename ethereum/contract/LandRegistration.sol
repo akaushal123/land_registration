@@ -42,6 +42,7 @@ contract LandRegistration{
     function addAdmin(address _admin,string memory _village ) onlySuperAdmin public {
         admin[_village]=_admin;
     }
+
     //Registration of land details.
     function Registration(string memory _state,string memory _district,
         string memory _village,uint256 _surveyNumber,

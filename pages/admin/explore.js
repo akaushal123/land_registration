@@ -40,9 +40,14 @@ class Explore extends Component {
                 requestStatus : ""
             };
 
+            console.log(this.state.userAddress);
+            const assets = await factory.methods.viewAssets().call({
+                from : this.state.userAddress
+            });
             const info = await factory.methods.landInfoAdmin(computedId).call();
             
-            if(!info) {
+            if(info[0] == "0x0000000000000000000000000000000000000000") {
+                console.log("inside");
                 throw new Error("No such record");
             }
 
@@ -51,11 +56,12 @@ class Explore extends Component {
             landInfo.requester = info[2];
             landInfo.requestStatus = info[3];
             
-            console.log(landInfo);
+            console.log(assets);
 
             this.setState({landInfo : landInfo , loading : false});
             
         }catch(err) {
+            this.setState({loading : false, errorMessage : err.message});
         }
     }
 
@@ -113,7 +119,6 @@ class Explore extends Component {
                                 </div>
                                 <div className={["four","wide","column"].join(' ')}>
                                     <div className={styles.BtnSearch}>
-                                        <Message error header="Oops!" content={this.state.errorMessage} />
                                         <Button primary loading={this.state.loading}> Search </Button>
                                     </div>
                                 </div>
@@ -140,14 +145,14 @@ class Explore extends Component {
                                 
                                 <div className={["four","wide","column"].join(' ')}>
                                     <div className={styles.BtnSearch}>
-                                        <Message error header="Oops!" content={this.state.errorMessage} />
                                         <Button primary> Search </Button>
                                     </div>
                                 </div>
-                            </div>                        
+                            </div>
+                            <Message style={{width:"80%"}} error header="Oops!" content={this.state.errorMessage} />                        
                         </Form>
                     </div>
-                
+                    
                     { this.state.landInfo!==null ? 
                     <div className={styles.LandInfoCard}>
                         <div className={["ui","cards"].join(' ')}>
