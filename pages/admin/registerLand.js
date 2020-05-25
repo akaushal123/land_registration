@@ -17,7 +17,8 @@ class RegisterLand extends Component {
         userAddress : "",
         errorMessage : '',
         surveyNumber : "",
-        marketValue : 0
+        marketValue : 0,
+        loading : false
     }
 
     convertAddress = (address) => {
@@ -34,6 +35,7 @@ class RegisterLand extends Component {
     register = async () => {
         event.preventDefault();
         try{
+            this.setState({loading : true});
             const userAddress = this.convertAddress(this.state.userAddress);
             const ownerAddress = this.convertAddress(this.state.ownerAddress);
             if(!userAddress){
@@ -74,10 +76,10 @@ class RegisterLand extends Component {
                     console.error("Error adding Land Record : ",error);
                 });
 
-            this.setState({buttonText : "Registered!!!"});
+            this.setState({buttonText : "Registered!!!", loading : false});
             Router.pushRoute('/admin');
         }catch(err) {
-            this.setState({errorMessage : err.message.slice(0,50)});
+            this.setState({errorMessage : err.message.slice(0,50),loading : false});
         }
     }
 
@@ -137,7 +139,7 @@ class RegisterLand extends Component {
                                 onChange={event => this.setState({marketValue : event.target.value})} />
                             </Form.Field>
                             <Message error header="Oops!" content={this.state.errorMessage} />
-                            <Button primary> {this.state.buttonText} </Button>
+                            <Button loading={this.state.loading} primary> {this.state.buttonText} </Button>
                         </Form>
                 </section>
             </Layout>

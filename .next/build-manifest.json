@@ -19,6 +19,14 @@
     ],
     "/_polyfills": [
       "static/runtime/polyfills.js"
+    ],
+    "/admin": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/superAdmin/addAdmin": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ]
   }
 }

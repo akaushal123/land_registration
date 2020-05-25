@@ -48,7 +48,7 @@ class Explore extends Component {
 
             landInfo.currentOwner = info[0];
             landInfo.isAvailable = info[1] ? "true" : "false";
-            landInfo.requester = info[2];
+            landInfo.requester = info[2] == "0x0000000000000000000000000000000000000000" ? "No one" : info[2];
             landInfo.requestStatus = info[3];
             
             console.log(landInfo);
@@ -56,6 +56,7 @@ class Explore extends Component {
             this.setState({landInfo : landInfo , loading : false});
             
         }catch(err) {
+            this.setState({loading : false, errorMessage : err.message});
         }
     }
 

@@ -28,10 +28,15 @@ class Explore extends Component {
         event.preventDefault();
         try{
             this.setState({loading : true});
+
             const computedId = await factory.methods.computeId(
                 this.state.state,this.state.district,this.state.village,
                 this.state.surveyNumber
-            ).call();
+            ).call({
+                from : this.state.userAddress
+            });
+
+            //console.log(computedId);
             
             const landInfo = {
                 currentOwner : "",
@@ -40,23 +45,19 @@ class Explore extends Component {
                 requestStatus : ""
             };
 
-            //console.log(this.state.userAddress);
-            //const assets = await factory.methods.viewAssets().call({
-            //    from : this.state.userAddress
-            //});
-            const info = await factory.methods.landInfoAdmin(computedId).call();
+            const info = await factory.methods.landInfoAdmin(computedId).call({
+                from : this.state.userAddress
+            });
             
             if(info[0] == "0x0000000000000000000000000000000000000000") {
-                //console.log("inside");
+                console.log("inside");
                 throw new Error("No such record");
             }
 
             landInfo.currentOwner = info[0];
             landInfo.isAvailable = info[1] ? "true" : "false";
-            landInfo.requester = info[2];
+            landInfo.requester = info[2] == "0x0000000000000000000000000000000000000000" ? "No one" : info[2];
             landInfo.requestStatus = info[3];
-            
-            console.log(assets);
 
             this.setState({landInfo : landInfo , loading : false});
             

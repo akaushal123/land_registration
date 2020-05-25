@@ -16,7 +16,8 @@ class AddAdmin extends Component {
         adminAddress : '',
         buttonText : "Assign!",
         userAddress : "",
-        errorMessage : ''
+        errorMessage : '',
+        loading : false
     }
 
     convertAddress = (address) => {
@@ -34,6 +35,7 @@ class AddAdmin extends Component {
     onSubmit = async () => {
         event.preventDefault();
         try{
+            this.setState({loading : true});
             const userAddress = this.convertAddress(this.state.userAddress);
             const adminAddress = this.convertAddress(this.state.adminAddress);
             if(!userAddress){
@@ -45,6 +47,7 @@ class AddAdmin extends Component {
             });
 
             var db = firebase.firestore();
+            var res;
             db.collection("UserRoles")
                 .doc(adminAddress)
                 .set({
@@ -58,10 +61,10 @@ class AddAdmin extends Component {
                 .catch(function(error){
                     console.error("Error adding admin : ",error);
                 });
-            this.setState({buttonText : "Added!!!"});
+            this.setState({buttonText : "Added!!!", loading : false});
             //Router.pushRoute('/superAdmin');
         }catch(err) {
-            this.setState({errorMessage : err.message.slice(0,50)});
+            this.setState({errorMessage : err.message.slice(0,50),loading : false});
         }
     }
 
@@ -105,7 +108,7 @@ class AddAdmin extends Component {
                                 onChange={event => this.setState({adminAddress : event.target.value})}/>
                             </Form.Field>
                             <Message error header="Oops!" content={this.state.errorMessage} />
-                            <Button primary> {this.state.buttonText} </Button>
+                            <Button loading={this.state.loading} primary> {this.state.buttonText} </Button>
                         </Form>
                 </section>
             </Layout>
