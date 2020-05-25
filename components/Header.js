@@ -19,6 +19,9 @@ export default () =>{
                 <Link route={'/explore'}>
                     <a className={'item'}>Explore</a>
                 </Link>
+                <Link route={'/requested'}>
+                    <a className={'item'}>Requested</a>
+                </Link>
             </Menu.Menu>
         </Menu>
     );

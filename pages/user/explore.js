@@ -23,15 +23,33 @@ class ExploreProperty extends Component {
         requester: '',
         requestStatus: null,
         id: null,
+        userAddress : ''
     };
 
+    convertAddress = (address) => {
+        if(!address)
+            return address;
+        return address.toLowerCase();;
+    }
+
+    async componentDidMount() {
+        var userAddress = await ethereum.selectedAddress;
+        userAddress = this.convertAddress(userAddress);
+        this.setState({userAddress});
+    }
+
     renderSearchCard() {
+        //console.log(this.state.isAvailable);
         const extra = (
             <div>
                 Requester: {this.state.requester} <br/>
                 Request Status: {this.state.requestStatus}
                 <br/>
-                <RequestSale basic isAvailable={this.state.isAvailable} id={this.state.id}/>
+                <RequestSale 
+                basic
+                isAvailable={this.state.isAvailable}
+                userAddress={this.state.userAddress} 
+                id={this.state.id}  />
             </div>
         );
 
@@ -53,10 +71,13 @@ class ExploreProperty extends Component {
         event.preventDefault();
         this.setState({loading: true, errorMessage: ''});
         try {
+            //console.log(this.state.state, this.state.district, this.state.village, this.state.survey);
             const id = await factory.methods.computeId(this.state.state, this.state.district, this.state.village, this.state.survey).call();
             const ownerDetails = await factory.methods.landInfoUser(id).call();
+            //console.log(ownerDetails);
             const currentOwner = ownerDetails[0], marketValue = ownerDetails[1], isAvailable = ownerDetails[2],
                 requester = ownerDetails[3], requestStatus = ownerDetails[4];
+            console.log(isAvailable);
             this.setState({
                 currentOwner,
                 marketValue,

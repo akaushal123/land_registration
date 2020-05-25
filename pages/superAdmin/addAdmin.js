@@ -5,6 +5,7 @@ import styles from './addAdmin.module.css';
 import factory from './../../ethereum/factory';
 import web3 from './../../ethereum/web3';
 import firebase from "../../components/firebaseAuth";
+import * as fb from 'firebase';
 import { Router } from '../../routes';
 
 class AddAdmin extends Component {
@@ -47,20 +48,35 @@ class AddAdmin extends Component {
             });
 
             var db = firebase.firestore();
-            var res;
-            db.collection("UserRoles")
-                .doc(adminAddress)
-                .set({
-                    address : adminAddress,
-                    role : "admin",
-                    village : this.state.village
-                })
-                .then(function() {
-                    console.log("Admin Added");
-                })
-                .catch(function(error){
-                    console.error("Error adding admin : ",error);
-                });
+            var userRef = db.collection("UserRoles").doc(adminAddress);
+            
+            await userRef.get().then( (doc) => {
+                if (doc.exists) {
+                    userRef.update({
+                        villages: fb.firestore.FieldValue.arrayUnion({
+                            address : this.state.userAddress,
+                            village : this.state.village,
+                            role : 'admin'
+                        })
+                    })
+                    .then(function() {
+                        console.log("Admin Added");
+                    })
+                } else {
+                    console.log("Dont exits");
+                    userRef.set({
+                        villages : [{
+                            address : this.state.userAddress,
+                            village : this.state.village,
+                            role : 'admin'
+                        }]
+                    })
+                }
+            })
+            .catch(function(error) {
+                console.log("Error getting document:", error);
+            });
+            
             this.setState({buttonText : "Added!!!", loading : false});
             //Router.pushRoute('/superAdmin');
         }catch(err) {

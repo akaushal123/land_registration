@@ -1,20 +1,62 @@
 import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
 import {Button, Form, Icon} from "semantic-ui-react";
+import firebase from './../firebaseAuth';
+import * as fb from 'firebase';
 
 export class RequestSale extends Component {
 
     state = {
         send: false,
-        isAvailable: this.props.isAvailable
+        isAvailable : this.props.isAvailable
     };
 
     onSubmit = async event => {
         event.preventDefault();
         console.log(this.props.id);
         try{
-            await factory.methods.requstToLandOwner(this.props.id).call();
-            this.setState({send: true})
+            await factory.methods.requstToLandOwner(this.props.id).send({ from : this.props.userAddress});
+            
+            const info = await factory.methods.landInfoOwner(this.props.id).call({ from : this.props.userAddress}); 
+            console.log(this.state.isAvailable);
+            // Add this req to database 
+            var db = firebase.firestore();
+            var reqDataRef = db.collection("RequestedData").doc(this.props.userAddress);
+            
+            await reqDataRef.get().then( (doc) => {
+                if (doc.exists) {
+                    reqDataRef.update({
+                        requested : fb.firestore.FieldValue.arrayUnion({
+                            village : info[2],
+                            state : info[0],
+                            district : info[1],
+                            survey : info[3],
+                            id : this.props.id
+                        })
+                    })
+                    .then(function() {
+                        console.log("Request Added");
+                    })
+                } else {
+                    console.log("First request");
+                    reqDataRef.set({
+                        requested : [{
+                            village : this.props.village,
+                            state : this.props.state,
+                            district : this.props.district,
+                            survey : this.props.survey,
+                            id : this.props.id
+                        }]
+                    })
+                }
+            })
+            .catch(function(error) {
+                console.log("Error getting document:", error);
+            });
+
+            
+            this.setState({send: true});
+            console.log(this.state.isAvailable);
         }catch(e) {
             console.log(e);
         }
@@ -23,7 +65,9 @@ export class RequestSale extends Component {
     render() {
         return (
             <Form onSubmit={this.onSubmit}>
-                <Button content={'Request for sale'} icon='home' iconposition='right' color={!this.state.send?'red':'green'} fluid disabled={!this.state.isAvailable || this.state.send} />
+                <Button content={'Request for sale'} icon='home' iconposition='right' color={!this.state.send?'red':'green'} 
+                fluid
+                disabled={!this.state.isAvailable || this.state.send} />
             </Form>
         );
     }
