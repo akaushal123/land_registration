@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
 import {Button, Card} from 'semantic-ui-react';
 import Layout from "../../components/Layout";
-import {Link} from '../../routes';
 
 class Property extends Component {
 
     state = {
         loaded: false,
         properties: [],
-        data: []
+        data: [],
+        loading: false,
+        error: ''
     };
 
     async componentDidMount() {
@@ -17,50 +18,61 @@ class Property extends Component {
             from: ethereum.selectedAddress
         });
         this.setState({loaded: true, properties});
+        const data = Promise.all(properties.map(property => {
+            return factory.methods.landInfoOwner(property).call({
+                from: ethereum.selectedAddress
+            });
+        }));
+        this.setState({data});
+        console.log(data);
     }
 
     makeAvailable = async (surveyId) => {
-        console.log(surveyId);
+        this.setState({loading: true, error: ''});
         try {
             await factory.methods.makeAvailable(surveyId).send({
                 from: ethereum.selectedAddress
             });
         } catch (e) {
-            console.log(e);
+            this.setState({error: e.message})
         }
+        this.setState({loading: false});
 
     };
-
-    data = async (surveyId) => {
-        const data = await factory.methods.landInfoOwner(surveyId).call();
-        this.setState({data});
-        console.log(data);
-    };
+    //
+    // data = async (surveyId) => {
+    //     console.log(surveyId);
+    //
+    //     this.setState({data});
+    //     document.getElementById('data').hidden = !(document.getElementById('data').hidden);
+    // };
 
     renderProperties() {
-        const properties = this.state.properties.map(surveyId => {
-            // await this.data(surveyId);
-                return {
-                    header: surveyId,
-                    description: (
-                        <div>
-                            Hello
-                        </div>
-                        // <a onClick={this.data(surveyId)}>View Property</a>
-                    ),
-                    fluid: true,
-                    style: {overflowWrap: 'break-word'},
-                    extra: (
-                        <Button content={'Make Available'} color={'red'} fluid
-                                onClick={event => this.makeAvailable(surveyId)}/>
-                    )
-                }
-            });
+        const properties = this.state.properties.map((surveyId, index) => {
+            return {
+                header: `Property ID: ${surveyId}`,
+                description: (
+                    <div>
+                        <h4>
+                            Survey Number: {this.state.data[index]}<br/>
+                            Village: {this.state.data[index]}<br/>
+                            District: {this.state.data[index]}<br/>
+                            State: {this.state.data[index]}<br/>
+                        </h4>
+                    </div>
+                ),
+                style: {overflowWrap: 'break-word'},
+                extra: (
+                    <Button content={'Make Available'} color={'red'} fluid loading={this.state.loading}
+                            onClick={event => this.makeAvailable(surveyId)}/>
+                )
+            }
+        });
         return <Card.Group items={properties}/>;
     };
 
 
-    render(){
+    render() {
         return (
             <Layout>
                 <div>

@@ -34,9 +34,7 @@ class profile extends Component {
         db.collection("UserData").doc(userAddress).get().then(doc => {
             if (doc.exists) {
                   data = doc.data();
-                 console.log('fetch', data);
                 this.setState(data );
-                console.log(this.state.state, this.state.city);
             }else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
