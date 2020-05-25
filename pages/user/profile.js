@@ -112,16 +112,16 @@ class profile extends Component {
                     <script src="//geodata.solutions/includes/statecity.js"/>
                 </Head>
                 <div>
-                    <Header size={'large'} aligntext={'center'}>Edit Profile</Header>
+                    <Header size={'large'} aligntext={'center'} center>Profile</Header>
 
-                    <Grid textAlign={'center'} style={{height: '100vh'}}>
+                    <Grid textAlign={'left'} style={{height: '100vh'}}>
                         <Grid.Column style={{maxWidth: '80vw'}}>
 
                             <Form size={'small'} onSubmit={this.onSubmit}>
-                                <Header size={'medium'}>Ether Details</Header>
-                                <Form.Input fluid label={'Ether Address'} required
+                                <Header size={'medium'} textAlign={'center'}>Ether Details</Header>
+                                <Form.Input fluid label={'Ether Address'} required style={{textColor:'red'}}
                                             value={this.state.etherAddress} disabled/>
-                                <Header size={'medium'}>Personal Information</Header>
+                                <Header size={'medium'} textAlign={'center'}>Personal Information</Header>
 
                                 <Form.Group widths='equal'>
                                     <Form.Input fluid placeholder={'First Name'} label={'First Name'} required value={this.state.firstName}
@@ -145,7 +145,7 @@ class profile extends Component {
                                     onChange={event => {this.setState({contact: event.target.value})}}/>
                                 </Form.Group>
 
-                                <Header size={'medium'}>Address detail</Header>
+                                <Header size={'medium'} textAlign={'center'}>Address detail</Header>
                                 <Form.Group widths={'equal'}>
                                     <Form.Input fluid placeholder={'Building Number'} label={'Building Number'} required value={this.state.building}
                                     onChange={event => this.setState({building: event.target.value})}/>
