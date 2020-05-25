@@ -4,6 +4,7 @@ import { Form, Button, Input, Message } from 'semantic-ui-react';
 import styles from './registerLand.module.css';
 import factory from './../../ethereum/factory';
 import { Router } from '../../routes';
+import firebase from './../../components/firebaseAuth';
 
 class RegisterLand extends Component {
 
@@ -19,6 +20,12 @@ class RegisterLand extends Component {
         marketValue : 0
     }
 
+    convertAddress = (address) => {
+        if(!address)
+            return address;
+        return address.toLowerCase();;
+    }
+
     async componentDidMount() {
         const userAddress = await ethereum.selectedAddress;
         this.setState({userAddress : userAddress});
@@ -27,27 +34,48 @@ class RegisterLand extends Component {
     register = async () => {
         event.preventDefault();
         try{
+            const userAddress = this.convertAddress(this.state.userAddress);
+            const ownerAddress = this.convertAddress(this.state.ownerAddress);
+            if(!userAddress){
+                throw new Error("Plese Connect to Ethereum first");
+            }
+
             const computedId = await factory.methods.computeId(
                 this.state.state,this.state.district,this.state.village,
                 this.state.surveyNumber
-            ).call();
-
-            const assets = await factory.methods.viewAssets().call();
-
-            console.log(assets,computedId);
+            ).call({from : userAddress});
 
             await factory.methods.Registration(
                 this.state.state,this.state.district,this.state.village,
                 this.state.surveyNumber,
-                this.state.ownerAddress,
+                ownerAddress,
                 this.state.marketValue,
                 computedId
                 )
                 .send({
-                from : this.state.userAddress
+                from : userAddress
             });
+
+            // add record to firebase
+            var db = firebase.firestore();
+            db.collection("LandRecords")
+                .doc(computedId)
+                .set({
+                    village : this.state.village,
+                    district : this.state.district,
+                    state : this.state.state,
+                    surveyNumber : this.state.surveyNumber,
+                    ownerAddress : ownerAddress
+                })
+                .then(function() {
+                    console.log("LandRecord Added");
+                })
+                .catch(function(error){
+                    console.error("Error adding Land Record : ",error);
+                });
+
             this.setState({buttonText : "Registered!!!"});
-            Router.pushRoute('/superAdmin');
+            Router.pushRoute('/admin');
         }catch(err) {
             this.setState({errorMessage : err.message.slice(0,50)});
         }

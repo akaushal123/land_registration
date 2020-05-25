@@ -6,18 +6,6 @@ import {Link} from '../../routes';
 
 class Property extends Component{
 
-<<<<<<< HEAD
-    async componentDidMount() {
-        try{
-            console.log(ethereum.selectedAddress);
-            const property = await factory.methods.viewAssets().call();
-            console.log('property', property);
-            return {property};
-        } catch(e){
-            console.log(e);
-        }
-    }
-=======
     state = {
         loaded: false,
         properties: []
@@ -30,7 +18,6 @@ class Property extends Component{
          this.setState({loaded: true, properties});
          return {properties};
      }
->>>>>>> master
 
      renderProperties() {
          console.log('yes');

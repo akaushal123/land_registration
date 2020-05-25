@@ -19,27 +19,38 @@ class AddAdmin extends Component {
         errorMessage : ''
     }
 
+    convertAddress = (address) => {
+        if(!address)
+            return address;
+        return address.toLowerCase();;
+    }
+
     async componentDidMount() {
-        const userAddress = await ethereum.selectedAddress;
-        this.setState({userAddress : userAddress});
+        var userAddress = await ethereum.selectedAddress;
+        userAddress = this.convertAddress(userAddress);
+        this.setState({userAddress});
     }
 
     onSubmit = async () => {
         event.preventDefault();
         try{
-            if(!this.state.userAddress){
+            const userAddress = this.convertAddress(this.state.userAddress);
+            const adminAddress = this.convertAddress(this.state.adminAddress);
+            if(!userAddress){
                 throw new Error("Plese Connect to Ethereum first");
             }
-            await factory.methods.addAdmin(this.state.adminAddress,this.state.village).send({
-                from : this.state.userAddress
+
+            await factory.methods.addAdmin(adminAddress,this.state.village).send({
+                from : userAddress
             });
 
             var db = firebase.firestore();
             db.collection("UserRoles")
-                .doc(this.state.userAddress)
+                .doc(adminAddress)
                 .set({
-                    address : this.state.userAddress,
-                    role : "admin"
+                    address : adminAddress,
+                    role : "admin",
+                    village : this.state.village
                 })
                 .then(function() {
                     console.log("Admin Added");

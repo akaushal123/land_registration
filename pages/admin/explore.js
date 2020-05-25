@@ -65,10 +65,6 @@ class Explore extends Component {
         }
     }
 
-    searchUser = async () => {
-        
-    }
-
     render() {
         return (
             <Layout>
@@ -123,33 +119,6 @@ class Explore extends Component {
                                     </div>
                                 </div>
                             </div>                        
-                        </Form>
-                    </div>
-                    <h3 style={{margin: "5px 0px 5px 50px"}}> OR </h3>
-                    <div>
-                        <div className={styles.HeaderText}>
-                            <h1 className={styles.HeroText}> Search Any User </h1>
-                        </div>
-                        <Form className={styles.AddForm} onSubmit={this.searchUser} error={!!this.state.errorMessage}>
-                            <div className={["ui","grid"].join(' ')}>
-                                <div className={["seven","wide","column"].join(' ')}>
-                                    <Form.Field className={styles.SearchField}>
-                                        <label>User Ethereum Address</label>
-                                        <Input 
-                                        required
-                                        value={this.state.address} 
-                                        onChange={event => this.setState({address : event.target.value})}
-                                        />
-                                    </Form.Field>
-                                </div>
-                                
-                                <div className={["four","wide","column"].join(' ')}>
-                                    <div className={styles.BtnSearch}>
-                                        <Button primary> Search </Button>
-                                    </div>
-                                </div>
-                            </div>
-                            <Message style={{width:"80%"}} error header="Oops!" content={this.state.errorMessage} />                        
                         </Form>
                     </div>
                     
