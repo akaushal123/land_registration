@@ -7,5 +7,4 @@ routes
     .add('/explore', '/user/explore')
     .add('/explore/:surveyId', '/user/explore/');
 
-
 module.exports = routes;

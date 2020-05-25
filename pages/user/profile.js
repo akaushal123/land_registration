@@ -18,34 +18,33 @@ class profile extends Component {
         building: '',
         street: '',
         state: '',
-        region: '',
+        village: '',
+        city: '',
         render: false,
         success: '',
     };
 
-    async componentDidMount() {
+    componentDidMount = async () => {
         const userAddress = await ethereum.selectedAddress;
         this.setState({etherAddress: userAddress});
 
-        //TODO yeh kaam to kr rha h but state me nhi ho pa rh h,fetch ho rha h database se data but show nhi ho rha h
-        //Retriving data from firestore
-       /* var db = firebase.firestore();
-        let firstName , middleName, lastName, gender, email, contact, building, street, state, region ;
-        db.collection("UserData").doc(userAddress).get().then(function(doc) {
+        var db = firebase.firestore();
+        var data = {};
+
+        db.collection("UserData").doc(userAddress).get().then(doc => {
             if (doc.exists) {
-                 firstName , middleName, lastName, gender, email, contact, building, street, state, region  = doc.data();
-                this.setState({ firstName: firstName , middleName: middleName, lastName: lastName, gender:gender,
-                    email: email, contact: contact, building: building, street: street, state: street, region: region});
-                console.log("Document data:", doc.data());
-            } else {
+                  data = doc.data();
+                 console.log('fetch', data);
+                this.setState(data );
+                console.log(this.state.state, this.state.city);
+            }else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
             }
         }).catch(function(error) {
             console.log("Error getting document:", error);
         });
-*/
-    }
+    };
 
     onSubmit = (event)=> {
         event.preventDefault();
@@ -60,12 +59,13 @@ class profile extends Component {
             contact: this.state.contact,
             building: this.state.building,
             street: this.state.street,
+            village: this.state.village,
             state: this.state.state,
-            region: this.state.region,
+            city: this.state.city,
         })
-            .then(function () {
+            .then(() => {
                 console.log("Document written with ID");
-                // this.setState({render:true, success:true});
+                this.setState({render:true, success:true});
             })
             .catch(function (error) {
                 console.error("Error adding document: ", error);
@@ -73,19 +73,19 @@ class profile extends Component {
             });
     };
 
-    // renderMessage() {
-    //     return ( this.state.success ?
-    //                 <Message
-    //                     success
-    //                     header='Success'
-    //                     content='Data updated successfully'
-    //                 /> :
-    //                 <Message error
-    //                              header='Error'
-    //                              content='Data not updated'
-    //                 />
-    //     );
-    // }
+    renderMessage() {
+        return ( this.state.success ?
+                    <Message
+                        success
+                        header='Success'
+                        content='Data updated successfully'
+                    /> :
+                    <Message error
+                                 header='Error'
+                                 content='Data not updated'
+                    />
+        );
+    }
 
     render() {
         const genderOptions = [
@@ -124,12 +124,12 @@ class profile extends Component {
                                 <Header size={'medium'}>Personal Information</Header>
 
                                 <Form.Group widths='equal'>
-                                    <Form.Input fluid placeholder={'First Name'} label={'First Name'} required
+                                    <Form.Input fluid placeholder={'First Name'} label={'First Name'} required value={this.state.firstName}
                                                 onChange={event => this.setState({firstName: event.target.value})}/>
-                                    <Form.Input fluid placeholder={'Middle Name'} label={'Middle Name'}
+                                    <Form.Input fluid placeholder={'Middle Name'} label={'Middle Name'} value={this.state.middleName}
                                                 onChange={event => this.setState({middleName: event.target.value})}/>
 
-                                    <Form.Input fluid placeholder={'Last Name'} label={'Last Name'} required
+                                    <Form.Input fluid placeholder={'Last Name'} label={'Last Name'} required value={this.state.lastName}
                                                 onChange={event => this.setState({lastName: event.target.value})}
                                     />
                                 </Form.Group>
@@ -138,31 +138,39 @@ class profile extends Component {
                                                    options={genderOptions} value={this.state.gender}
                                                     onChange={(event,data) => {this.setState({gender: data.value})}}/>
 
-                                    <Form.Input fluid placeholder={'Email Address'} label='Email' required type={'email'}
+                                    <Form.Input fluid placeholder={'Email Address'} label='Email' required type={'email'} value={this.state.email}
                                                 onChange={event => {this.setState({email: event.target.value})}}/>
 
-                                    <Form.Input fluid placeholder={'Contact'} required label='Contact Number' type={'number'}
+                                    <Form.Input fluid placeholder={'Contact'} required label='Contact Number' type={'number'} value={this.state.contact}
                                     onChange={event => {this.setState({contact: event.target.value})}}/>
                                 </Form.Group>
 
                                 <Header size={'medium'}>Address detail</Header>
                                 <Form.Group widths={'equal'}>
-                                    <Form.Input fluid placeholder={'Building Number'} label={'Building Number'} required
+                                    <Form.Input fluid placeholder={'Building Number'} label={'Building Number'} required value={this.state.building}
                                     onChange={event => this.setState({building: event.target.value})}/>
-                                    <Form.Input fluid placeholder={'Street'} label={'Street'} required
+                                    <Form.Input fluid placeholder={'Street'} label={'Street'} required value={this.state.street}
                                     onChange={event => this.setState({street: event.target.value})}/>
                                 </Form.Group>
 
                                 <Form.Group widths={'equal'}>
-                                    <input type="hidden" name="country" id="countryId" value="IN"/>
-                                    <select name="state" value={this.state.state} className="states order-alpha" id="stateId"
-                                            onChange={event => this.setState({state: event.target.value})}>
-                                        <option value="">Select State</option>
-                                    </select>
-                                    <select name="city" value={this.state.city} className="cities order-alpha" id="cityId"
-                                            onChange={event=>this.setState({region: event.target.value})}>
-                                        <option value="">Select City</option>
-                                    </select>
+
+                                    <Form.Input fluid placeholder={'Village'} label={'Village'} required value={this.state.village}
+                                                onChange={event => this.setState({village: event.target.value})}/>
+                                    <Form.Input fluid placeholder={'City'} label={'City'} required value={this.state.city}
+                                                onChange={event => this.setState({city: event.target.value})}/>
+                                    <Form.Input fluid placeholder={'State'} label={'State'} required value={this.state.state}
+                                                onChange={event => this.setState({state: event.target.value})}/>
+
+                                    {/*<input type="hidden" name="country" id="countryId" value="IN"/>*/}
+                                    {/*<select name="state" value={this.state.state} className="states order-alpha" id="stateId" required*/}
+                                    {/*        onChange={event => this.setState({state: event.target.value})}>*/}
+                                    {/*    <option value="">Select State</option>*/}
+                                    {/*</select>*/}
+                                    {/*<select name="city" value={this.state.city} className="cities order-alpha" id="cityId" required*/}
+                                    {/*        onChange={event=>this.setState({city: event.target.value})}>*/}
+                                    {/*    <option value="">Select City</option>*/}
+                                    {/*</select>*/}
 
                                 </Form.Group>
                                 <Form.Group>
@@ -171,7 +179,7 @@ class profile extends Component {
                                     </Button>
                                 </Form.Group>
                             </Form>
-                            {/*{this.state.render ? this.renderMessage() : null}*/}
+                            {this.state.render ? this.renderMessage() : null}
                         </Grid.Column>
                     </Grid>
                 </div>
