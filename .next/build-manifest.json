@@ -20,11 +20,15 @@
     "/_polyfills": [
       "static/runtime/polyfills.js"
     ],
-    "/admin": [
+    "/user/explore": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/superAdmin/addAdmin": [
+    "/user/profile": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/user/property": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ]

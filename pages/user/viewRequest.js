@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
 import {Card} from 'semantic-ui-react';
+import Layout from "../../components/Layout";
 
 export default class viewRequest extends Component {
 
@@ -24,10 +25,10 @@ export default class viewRequest extends Component {
             return {requests};
         } catch(e){
             console.log(e);
-        }
+        }ik
 
     }
-
+/*
     renderCard() {
         return this.props.requests.map((request, index) =>
             <Card.Group>
@@ -38,12 +39,12 @@ export default class viewRequest extends Component {
                 </Card>
             </Card.Group>
         )
-    }
+    }*/
 
     render(){
         return (
             <Layout>
-                {this.renderCard()}
+                {/*{this.renderCard()}*/}
             </Layout>
         )
     }

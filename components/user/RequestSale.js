@@ -11,6 +11,7 @@ export class RequestSale extends Component {
 
     onSubmit = async event => {
         event.preventDefault();
+        console.log(this.props.id);
         try{
             await factory.methods.requstToLandOwner(this.props.id).call();
             this.setState({send: true})

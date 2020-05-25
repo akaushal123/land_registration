@@ -10,7 +10,10 @@ import Link from "next/link";
 class ExploreProperty extends Component {
 
     state = {
-        value: '',
+        village: '',
+        district: '',
+        state: '',
+        survey: null,
         loading: false,
         loaded: false,
         error: '',
@@ -19,58 +22,55 @@ class ExploreProperty extends Component {
         isAvailable: null,
         requester: '',
         requestStatus: null,
-        searched: ''
+        id: null,
     };
 
     renderSearchCard() {
-        const {currentOwner, marketValue, isAvailable, requester, requestStatus} = this.state;
+        const extra = (
+            <div>
+                Requester: {this.state.requester} <br/>
+                Request Status: {this.state.requestStatus}
+                <br/>
+                <RequestSale basic isAvailable={this.state.isAvailable} id={this.state.id}/>
+            </div>
+        );
 
-        const items = [
-            {
-                header: currentOwner,
-                meta: "Property's current owner",
-                description: "This is the owner of the property",
-                style: {overflowWrap: 'break-word'}
-            },
-            {
-                header: marketValue,
-                meta: "Property's current Value",
-                description: "Market value of the property",
-                style: {overflowWrap: 'break-word'}
-            },
-            {
-                header: isAvailable ? "Yes" : "No",
-                meta: "Property's available for sale",
-                description: "is Property Available for sale"
-            },
-            {
-                header: requester,
-                meta: "Property's requested by",
-                description: "This is the property is currently requested for sale",
-                style: {overflowWrap: 'break-word'}
-            },
-            {
-                header: requestStatus,
-                meta: "Response of the owner for property sale",
-                description: "Request status of the property",
-                style: {overflowWrap: 'break-word'}
-            }
-        ];
-        return <Card.Group items={items}/>;
+        const header = (
+            <div>
+                Property ID: {this.state.id}<br/>
+                Current Owner: {this.state.currentOwner}
+            </div>
+        );
+        return <Card fluid color={this.state.isAvailable ? 'green' : 'red'}
+                     header={header}
+                     description={`Market Value:  ${this.state.marketValue}`}
+                     meta={`Available for Sale:  ${this.state.isAvailable ? "Yes" : "No"}`}
+                     extra={extra}
+        />;
     }
 
     onSubmit = async (event) => {
         event.preventDefault();
         this.setState({loading: true, errorMessage: ''});
         try {
-            const ownerDetails = await factory.methods.landInfoUser(this.state.value).call();
+            const id = await factory.methods.computeId(this.state.state, this.state.district, this.state.village, this.state.survey).call();
+            const ownerDetails = await factory.methods.landInfoUser(id).call();
             const currentOwner = ownerDetails[0], marketValue = ownerDetails[1], isAvailable = ownerDetails[2],
                 requester = ownerDetails[3], requestStatus = ownerDetails[4];
-            const searched = this.state.value;
-            this.setState({currentOwner, marketValue, isAvailable, requester, requestStatus, searched});
+            this.setState({
+                currentOwner,
+                marketValue,
+                isAvailable,
+                requester,
+                requestStatus,
+                id,
+                state: '',
+                district: '',
+                survey: null,
+                village: ''
+            });
             this.renderSearchCard();
             this.setState({loaded: true});
-
         } catch (err) {
             this.setState({error: err.message});
         }
@@ -84,12 +84,18 @@ class ExploreProperty extends Component {
             <Layout>
                 <h3 aligntext={'center'}>Search Property</h3>
                 <Form onSubmit={this.onSubmit}>
-                    <Form.Input
-                        icon={<Icon name='search' inverted circular/>} loading={this.state.loading}
-                        value={this.state.value}
-                        placeholder='Search...(Enter property ID)'
-                        onChange={event => this.setState({value: event.target.value})}
-                    />
+                    <Form.Group widths={'equal'}>
+                        <Form.Input fluid placeholder={'Village'} value={this.state.village}
+                                    onChange={event => this.setState({village: event.target.value})}/>
+                        <Form.Input fluid placeholder={'District'} value={this.state.district}
+                                    onChange={event => this.setState({district: event.target.value})}/>
+                        <Form.Input fluid placeholder={'State'} value={this.state.state}
+                                    onChange={event => this.setState({state: event.target.value})}/>
+                        <Form.Input fluid placeholder={'Survey Number'} value={this.state.survey}
+                                    onChange={event => this.setState({survey: event.target.value})} type={'number'}/>
+                        <Button loading={this.state.loading} size={'tiny'}
+                                icon={<Icon name='search' size={'small'} inverted circular/>}/>
+                    </Form.Group>
                 </Form>
 
                 <br/>
@@ -101,11 +107,6 @@ class ExploreProperty extends Component {
                             <Grid.Row>
                                 <Grid.Column>
                                     {this.renderSearchCard()}
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Grid.Column>
-                                    <RequestSale isAvailable={this.state.isAvailable} id={this.state.searched}/>
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>
