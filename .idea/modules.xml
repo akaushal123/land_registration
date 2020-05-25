@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Solidity/kickstart/.idea/kickstart.iml" filepath="$PROJECT_DIR$/../Solidity/kickstart/.idea/kickstart.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/land_registration.iml" filepath="$PROJECT_DIR$/.idea/land_registration.iml" />
     </modules>
   </component>

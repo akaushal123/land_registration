@@ -13,7 +13,9 @@ export class RequestSale extends Component {
         event.preventDefault();
         console.log(this.props.id);
         try{
-            await factory.methods.requstToLandOwner(this.props.id).call();
+            await factory.methods.requstToLandOwner(this.props.id).send({
+                from:ethereum.selectedAddress
+            });
             this.setState({send: true})
         }catch(e) {
             console.log(e);
@@ -23,7 +25,7 @@ export class RequestSale extends Component {
     render() {
         return (
             <Form onSubmit={this.onSubmit}>
-                <Button content={'Request for sale'} icon='home' iconposition='right' color={!this.state.send?'red':'green'} fluid disabled={!this.state.isAvailable || this.state.send} />
+                <Button content={'Request for sale'} icon='home' iconposition='right' color={!this.state.isAvailable?'red':'green'} fluid disabled={!this.state.isAvailable} />
             </Form>
         );
     }

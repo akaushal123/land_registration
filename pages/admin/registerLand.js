@@ -23,8 +23,8 @@ class RegisterLand extends Component {
     convertAddress = (address) => {
         if(!address)
             return address;
-        return address.toLowerCase();;
-    }
+        return address.toLowerCase();
+    };
 
     async componentDidMount() {
         const userAddress = await ethereum.selectedAddress;
@@ -37,7 +37,7 @@ class RegisterLand extends Component {
             const userAddress = this.convertAddress(this.state.userAddress);
             const ownerAddress = this.convertAddress(this.state.ownerAddress);
             if(!userAddress){
-                throw new Error("Plese Connect to Ethereum first");
+                throw new Error("Please Connect to Ethereum first");
             }
 
             const computedId = await factory.methods.computeId(
@@ -79,7 +79,7 @@ class RegisterLand extends Component {
         }catch(err) {
             this.setState({errorMessage : err.message.slice(0,50)});
         }
-    }
+    };
 
     render() {
         return (

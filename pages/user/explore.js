@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
 import {Input, Card, Search, Grid, Form, Icon, Container, Button} from "semantic-ui-react";
-import web3 from '../../ethereum/web3';
 import {RequestSale} from "../../components/user/RequestSale";
 import Layout from "../../components/Layout";
-import SearchResult from "../../components/user/SearchResult";
-import Link from "next/link";
 
 class ExploreProperty extends Component {
 
@@ -26,26 +23,19 @@ class ExploreProperty extends Component {
     };
 
     renderSearchCard() {
-        const extra = (
-            <div>
-                Requester: {this.state.requester} <br/>
-                Request Status: {this.state.requestStatus}
-                <br/>
-                <RequestSale basic isAvailable={this.state.isAvailable} id={this.state.id}/>
-            </div>
-        );
 
         const header = (
             <div>
-                Property ID: {this.state.id}<br/>
+                <h3>Property ID: {this.state.id}</h3>
                 Current Owner: {this.state.currentOwner}
             </div>
         );
+
         return <Card fluid color={this.state.isAvailable ? 'green' : 'red'}
                      header={header}
                      description={`Market Value:  ${this.state.marketValue}`}
                      meta={`Available for Sale:  ${this.state.isAvailable ? "Yes" : "No"}`}
-                     extra={extra}
+                     extra={<RequestSale basic isAvailable={this.state.isAvailable} id={this.state.id}/>}
         />;
     }
 

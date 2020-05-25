@@ -2,17 +2,20 @@ import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
 import {Card} from 'semantic-ui-react';
 import Layout from "../../components/Layout";
+import RequestApproval from '../../components/user/RequestApproval';
 
 export default class viewRequest extends Component {
 
-    async componentDidMount() {
+    state = {
+        properties: [],
+        requests:[]
+    };
 
+    async componentDidMount() {
         const properties = await factory.methods.viewAssets().call({
             from: ethereum.selectedAddress
         });
-        console.log(properties);
 
-        //TODO yeh hr bnde k liye request ko dikhta hai, but iska UI bnana h. Console.log() ho rha h
         try {
             const requests = await Promise.all(
                 properties.map(property => {
@@ -21,30 +24,36 @@ export default class viewRequest extends Component {
                     });
                 })
             );
-            console.log(requests);
-            return {requests};
+            this.setState({properties, requests});
+            return {properties, requests};
         } catch(e){
             console.log(e);
-        }ik
-
+        }
     }
-/*
-    renderCard() {
-        return this.props.requests.map((request, index) =>
-            <Card.Group>
-                <Card>
-                    <Card.Content>
 
-                    </Card.Content>
-                </Card>
-            </Card.Group>
-        )
-    }*/
+    renderCard() {
+
+        const items = this.state.properties.map((property,index) =>{
+            const requestAddress = this.state.requests[index];
+            return{
+                header: `Property ID: ${property}`,
+                description: `Requester: ${requestAddress}`,
+                style: { overflowWrap: 'break-word' },
+                fluid: true,
+                extra: (
+                    <RequestApproval property={property} requestAddress={requestAddress}/>
+                )
+            };
+        });
+
+        return <Card.Group items={items}/>
+    }
 
     render(){
         return (
             <Layout>
-                {/*{this.renderCard()}*/}
+                <h3>View Requests</h3>
+                {this.renderCard()}
             </Layout>
         )
     }

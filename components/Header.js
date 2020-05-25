@@ -13,8 +13,11 @@ export default () =>{
                 <Link route={'/user'}>
                     <a className={'item'}>Profile</a>
                 </Link>
-                <Link route={'/user/property'}>
+                <Link route={'/property'}>
                     <a className={'item'}>Property</a>
+                </Link>
+                <Link route={'/request'}>
+                    <a className={'item'}>View Request</a>
                 </Link>
                 <Link route={'/explore'}>
                     <a className={'item'}>Explore</a>

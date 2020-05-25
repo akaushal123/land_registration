@@ -50,7 +50,7 @@ class AddAdmin extends Component {
                 .set({
                     address : adminAddress,
                     role : "admin",
-                    village : this.state.village
+                    village: this.state.village
                 })
                 .then(function() {
                     console.log("Admin Added");
