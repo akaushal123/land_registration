@@ -1,0 +1,67 @@
+.clearfix { zoom: 1; }
+.clearfix:after {
+    content: '.';
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+
+.LogoBox {
+    padding: 5px;
+    
+}
+
+.LogoBox img {
+    height: 150px;
+    margin-left: 50px;
+    width: auto;
+    float: left;
+    margin-top: 10px;
+}
+
+
+.Main {
+    height: 100%;
+    font-family: sans-serif;
+}
+
+.HeaderText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 20px;
+    width: 70%;
+}
+
+.HeroText {
+    color: #eee;
+    font-weight: 100;
+    display: relative;
+}
+
+.HeroText span {
+    display: block;
+    text-transform: uppercase;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 10px 0;
+}
+
+.HeroText__sub1 {
+    letter-spacing: 1px;
+}
+
+.HeroText__sub2 {
+    letter-spacing: 2px;
+
+}
+
+.HeroText__sub3 {
+    background-color: #fff;
+    color: #28b485;
+    cursor: pointer;
+}

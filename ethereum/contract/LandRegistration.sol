@@ -42,7 +42,6 @@ contract LandRegistration{
     function addAdmin(address _admin,string memory _village ) onlySuperAdmin public {
         admin[_village]=_admin;
     }
-
     //Registration of land details.
     function Registration(string memory _state,string memory _district,
         string memory _village,uint256 _surveyNumber,
@@ -58,16 +57,15 @@ contract LandRegistration{
         profile[_OwnerAddress].assetList.push(id);
         return true;
     }
-
     //to view details of land for the owner
     function landInfoOwner(uint id) public view returns(string memory,string memory,string memory,uint256,bool,address,reqStatus){
         return(land[id].state,land[id].district,land[id].village,land[id].surveyNumber,land[id].isAvailable,land[id].requester,land[id].requestStatus);
     }
-
+    
     function landInfoAdmin(uint id) public view returns(address,bool,address,reqStatus){
         return(land[id].CurrentOwner,land[id].isAvailable,land[id].requester,land[id].requestStatus);
     }
-
+    
     //to view details of land for the buyer
     function landInfoUser(uint id) public view returns(address,uint,bool,address,reqStatus){
         return(land[id].CurrentOwner,land[id].marketValue,land[id].isAvailable,land[id].requester,land[id].requestStatus);
@@ -85,17 +83,14 @@ contract LandRegistration{
         land[id].isAvailable=false;
         land[id].requestStatus = reqStatus.pending; //changes the status to pending.
     }
-
     //will show assets of the function caller
     function viewAssets()public view returns(uint[] memory){
         return (profile[msg.sender].assetList);
     }
-
     //viewing request for the lands
     function viewRequest(uint property)public view returns(address){
         return(land[property].requester);
     }
-
     //processing request for the land by accepting or rejecting
     function processRequest(uint property,reqStatus status)public {
         require(land[property].CurrentOwner == msg.sender);

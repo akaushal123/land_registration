@@ -1,0 +1,24 @@
+.Main {
+    height: 70%;
+    width: 100%;
+    margin-top: 30px;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+.HeaderText {
+    margin-left: 50px;
+}
+
+.AddForm {
+    margin-left: 50px;
+}
+
+.BtnSearch {
+    padding-top: 25px;
+}
+
+.LandInfoCard{
+    margin-left: 50px;
+    width: 100%;
+}

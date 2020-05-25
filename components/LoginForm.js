@@ -28,7 +28,7 @@ class LoginForm extends Component{
                  <Grid textAlign={'center'} style={{height: '100vh'}} verticalAlign={'middle'}>
                      <Grid.Column style={{maxWidth: 450}}>
                          <Header as={'h2'} color={'red'} textAlign={'center'}>
-                             <Image src={'static/logo.png'}/> Login
+                             <Image style={{height:"70px"}} src={'static/tiranga_national_emblem.png'}/> Login
                          </Header>
                          <Form size={'large'}>
                              <Segment stacked>

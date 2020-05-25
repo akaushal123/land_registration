@@ -1,0 +1,34 @@
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+Accounts : 
+0xD5fA413780245CBd666f05c0366F068015DfE339
+0x14C4DDee634C037ca1bcE97397D3bF85f6feB6D7
+0x905840d6e03b28588d475c3e2dc637bA87898D3c
+0x7B89198355a9102Ace2Bd8045DF9cfFBbF2C789D
+
+.Button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 10px;
+    margin: 10px;
+    font-weight: bold;
+}
+
+.Button:first-of-type {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.Success {
+    color: #5C9210;
+}
+
+.Danger {
+    color: #944317;
+}

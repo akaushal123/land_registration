@@ -25,6 +25,7 @@ const deploy = async () => {
             .send({from: accounts[0]});
 
         console.log('Contract deployed at ', result.options.address);
+        console.log('Contract Owner : ', accounts[0]);
     } catch(e) {
         console.log(e);
     }
