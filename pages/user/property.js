@@ -8,7 +8,7 @@ class Property extends Component {
     state = {
         loaded: false,
         properties: [],
-        data: [],
+        data: [{}],
         loading: false,
         error: ''
     };
@@ -18,12 +18,13 @@ class Property extends Component {
             from: ethereum.selectedAddress
         });
         this.setState({loaded: true, properties});
-        const data = Promise.all(properties.map(property => {
+        const data = await Promise.all(properties.map(property => {
             return factory.methods.landInfoOwner(property).call({
                 from: ethereum.selectedAddress
             });
         }));
-        this.setState({data});
+        this.setState({data: data});
+        console.log(this.state.data);
         console.log(data);
     }
 
@@ -39,13 +40,6 @@ class Property extends Component {
         this.setState({loading: false});
 
     };
-    //
-    // data = async (surveyId) => {
-    //     console.log(surveyId);
-    //
-    //     this.setState({data});
-    //     document.getElementById('data').hidden = !(document.getElementById('data').hidden);
-    // };
 
     renderProperties() {
         const properties = this.state.properties.map((surveyId, index) => {
@@ -54,10 +48,10 @@ class Property extends Component {
                 description: (
                     <div>
                         <h4>
-                            Survey Number: {this.state.data[index]}<br/>
-                            Village: {this.state.data[index]}<br/>
-                            District: {this.state.data[index]}<br/>
-                            State: {this.state.data[index]}<br/>
+                            Survey Number: {this.state.data[index][3]}<br/>
+                            Village: {this.state.data[index][2]}<br/>
+                            District: {this.state.data[index][2]}<br/>
+                            State: {this.state.data[index][2]}<br/>
                         </h4>
                     </div>
                 ),
