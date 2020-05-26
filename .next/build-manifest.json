@@ -20,7 +20,7 @@
     "/_polyfills": [
       "static/runtime/polyfills.js"
     ],
-    "/user/explore": [
+    "/user/property": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],

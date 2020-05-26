@@ -16,7 +16,7 @@ class Explore extends Component {
         landInfo : null,
         loading : false
     }
-
+    
     reqStatus = ["Not set","Pending","Reject","Approved"];
 
     async componentDidMount() {

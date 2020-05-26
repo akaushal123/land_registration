@@ -13,18 +13,18 @@ export class RequestSale extends Component {
 
     onSubmit = async event => {
         event.preventDefault();
-        console.log(this.props.id);
+        //console.log(this.props.id);
         try{
-            await factory.methods.requstToLandOwner(this.props.id).send({ from : this.props.userAddress});
-            
             const info = await factory.methods.landInfoOwner(this.props.id).call({ from : this.props.userAddress}); 
-            console.log(this.state.isAvailable);
+            //console.log(this.state.isAvailable);
             // Add this req to database 
             var db = firebase.firestore();
             var reqDataRef = db.collection("RequestedData").doc(this.props.userAddress);
             
             await reqDataRef.get().then( (doc) => {
+                console.log(doc.exists);
                 if (doc.exists) {
+                    console.log("Exists");
                     reqDataRef.update({
                         requested : fb.firestore.FieldValue.arrayUnion({
                             village : info[2],
@@ -39,21 +39,25 @@ export class RequestSale extends Component {
                     })
                 } else {
                     console.log("First request");
+                    var now = this.props;
+                    console.log(now.village,now.state,now.district,now.survey,now.id);
                     reqDataRef.set({
                         requested : [{
-                            village : this.props.village,
-                            state : this.props.state,
-                            district : this.props.district,
-                            survey : this.props.survey,
+                            village : info[2],
+                            state : info[0],
+                            district : info[1],
+                            survey : info[3],
                             id : this.props.id
                         }]
                     })
+                    //console.log("first last");
                 }
             })
             .catch(function(error) {
-                console.log("Error getting document:", error);
+                console.log("Error getting document:", error.message);
             });
 
+            await factory.methods.requstToLandOwner(this.props.id).send({ from : this.props.userAddress});
             
             this.setState({send: true});
             console.log(this.state.isAvailable);
