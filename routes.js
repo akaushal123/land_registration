@@ -7,6 +7,7 @@ routes
     .add('/explore', '/user/explore')
     .add('/explore/:surveyId', '/user/explore/')
     .add('/request','/user/viewRequest')
+    .add('/requested','/user/requested')
     .add('/property', '/user/property');
 
 module.exports = routes;

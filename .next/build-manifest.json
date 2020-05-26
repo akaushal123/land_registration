@@ -20,11 +20,11 @@
     "/_polyfills": [
       "static/runtime/polyfills.js"
     ],
-    "/user/property": [
+    "/user/profile": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/user/viewRequest": [
+    "/user/requested": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ]

@@ -19,6 +19,9 @@ export default () =>{
                 <Link route={'/request'}>
                     <a className={'item'}>View Request</a>
                 </Link>
+                <Link route={'/requested'}>
+                    <a className={'item'}>View Requested</a>
+                </Link>
                 <Link route={'/explore'}>
                     <a className={'item'}>Explore</a>
                 </Link>

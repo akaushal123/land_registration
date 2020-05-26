@@ -20,22 +20,33 @@ class ExploreProperty extends Component {
         requester: '',
         requestStatus: null,
         id: null,
+        userAddress : ''
     };
 
-    renderSearchCard() {
+    convertAddress = (address) => {
+        if(!address)
+            return address;
+        return address.toLowerCase();
+    };
 
+    async componentDidMount() {
+        var userAddress = await ethereum.selectedAddress;
+        userAddress = this.convertAddress(userAddress);
+        this.setState({userAddress});
+    }
+
+    renderSearchCard() {
         const header = (
             <div>
-                <h3>Property ID: {this.state.id}</h3>
+                Property ID: {this.state.id}<br/>
                 Current Owner: {this.state.currentOwner}
             </div>
         );
-
         return <Card fluid color={this.state.isAvailable ? 'green' : 'red'}
                      header={header}
                      description={`Market Value:  ${this.state.marketValue}`}
                      meta={`Available for Sale:  ${this.state.isAvailable ? "Yes" : "No"}`}
-                     extra={<RequestSale basic isAvailable={this.state.isAvailable} id={this.state.id}/>}
+                     extra={<RequestSale basic isAvailable={this.state.isAvailable} userAddress={this.state.userAddress} id={this.state.id}  />}
         />;
     }
 
@@ -43,10 +54,13 @@ class ExploreProperty extends Component {
         event.preventDefault();
         this.setState({loading: true, errorMessage: ''});
         try {
+            //console.log(this.state.state, this.state.district, this.state.village, this.state.survey);
             const id = await factory.methods.computeId(this.state.state, this.state.district, this.state.village, this.state.survey).call();
             const ownerDetails = await factory.methods.landInfoUser(id).call();
+            //console.log(ownerDetails);
             const currentOwner = ownerDetails[0], marketValue = ownerDetails[1], isAvailable = ownerDetails[2],
                 requester = ownerDetails[3], requestStatus = ownerDetails[4];
+            console.log(isAvailable);
             this.setState({
                 currentOwner,
                 marketValue,

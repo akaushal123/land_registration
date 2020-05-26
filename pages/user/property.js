@@ -24,7 +24,7 @@ class Property extends Component {
             });
         }));
         this.setState({data: data});
-        console.log(this.state.data);
+        console.log('data',this.state.data);
         console.log(data);
     }
 
@@ -45,16 +45,16 @@ class Property extends Component {
         const properties = this.state.properties.map((surveyId, index) => {
             return {
                 header: `Property ID: ${surveyId}`,
-                description: (
-                    <div>
-                        <h4>
-                            Survey Number: {this.state.data[index][3]}<br/>
-                            Village: {this.state.data[index][2]}<br/>
-                            District: {this.state.data[index][2]}<br/>
-                            State: {this.state.data[index][2]}<br/>
-                        </h4>
-                    </div>
-                ),
+                // description: (
+                //     <div>
+                //         <h4>
+                //             Survey Number: {this.state.data[index][3]}<br/>
+                //             Village: {this.state.data[index][2]}<br/>
+                //             District: {this.state.data[index][2]}<br/>
+                //             State: {this.state.data[index][2]}<br/>
+                //         </h4>
+                //     </div>
+                // ),
                 style: {overflowWrap: 'break-word'},
                 extra: (
                     <Button content={'Make Available'} color={'red'} fluid loading={this.state.loading}

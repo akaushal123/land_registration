@@ -39,7 +39,6 @@ export default class viewRequest extends Component {
                 header: `Property ID: ${property}`,
                 description: `Requester: ${requestAddress}`,
                 style: { overflowWrap: 'break-word' },
-                fluid: true,
                 extra: (
                     <RequestApproval property={property} requestAddress={requestAddress}/>
                 )
