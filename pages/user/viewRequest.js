@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
-import {Card} from 'semantic-ui-react';
+import {Card, Header, Icon} from 'semantic-ui-react';
 import Layout from "../../components/Layout";
 import RequestApproval from '../../components/user/RequestApproval';
 
@@ -32,6 +32,14 @@ export default class viewRequest extends Component {
     }
 
     renderCard() {
+
+        if(!this.state.properties.length)
+            return (
+                <Header as='h1' textAlign={'center'} icon>
+                    <Icon name='bell' />
+                    No pending request
+                </Header>
+            );
 
         const items = this.state.properties.map((property,index) =>{
             const requestAddress = this.state.requests[index];

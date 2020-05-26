@@ -105,10 +105,6 @@ class profile extends Component {
         ];
         return (
             <Layout>
-                <Head>
-                    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"/>
-                    <script src="//geodata.solutions/includes/statecity.js"/>
-                </Head>
                 <div>
                     <Header size={'large'} aligntext={'center'} center>Profile</Header>
 
@@ -160,15 +156,6 @@ class profile extends Component {
                                     <Form.Input fluid placeholder={'State'} label={'State'} required value={this.state.state}
                                                 onChange={event => this.setState({state: event.target.value})}/>
 
-                                    {/*<input type="hidden" name="country" id="countryId" value="IN"/>*/}
-                                    {/*<select name="state" value={this.state.state} className="states order-alpha" id="stateId" required*/}
-                                    {/*        onChange={event => this.setState({state: event.target.value})}>*/}
-                                    {/*    <option value="">Select State</option>*/}
-                                    {/*</select>*/}
-                                    {/*<select name="city" value={this.state.city} className="cities order-alpha" id="cityId" required*/}
-                                    {/*        onChange={event=>this.setState({city: event.target.value})}>*/}
-                                    {/*    <option value="">Select City</option>*/}
-                                    {/*</select>*/}
 
                                 </Form.Group>
                                 <Form.Group>

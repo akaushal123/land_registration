@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
-import {Button, Card} from 'semantic-ui-react';
+import {Button, Card, Header, Icon} from 'semantic-ui-react';
 import Layout from "../../components/Layout";
 
 class Property extends Component {
@@ -8,7 +8,7 @@ class Property extends Component {
     state = {
         loaded: false,
         properties: [],
-        data: [{}],
+        data: [],
         loading: false,
         error: ''
     };
@@ -18,14 +18,17 @@ class Property extends Component {
             from: ethereum.selectedAddress
         });
         this.setState({loaded: true, properties});
-        const data = await Promise.all(properties.map(property => {
-            return factory.methods.landInfoOwner(property).call({
-                from: ethereum.selectedAddress
-            });
-        }));
-        this.setState({data: data});
-        console.log('data',this.state.data);
-        console.log(data);
+
+        this.state.properties.map((property, index)=>{
+            factory.methods.landInfoOwner(property).call()
+                .then(info => {
+                    const data = [...this.state.data];
+                    console.log('data54', data);
+                    data.push(info);
+                    this.setState({data});
+                    return true;
+                })
+        });
     }
 
     makeAvailable = async (surveyId) => {
@@ -42,19 +45,28 @@ class Property extends Component {
     };
 
     renderProperties() {
+
+        if(!this.state.properties.length)
+            return (
+                <Header as='h1' textAlign={'center'} icon>
+                    <Icon name='home' />
+                    No property owned
+                </Header>
+            );
+
         const properties = this.state.properties.map((surveyId, index) => {
             return {
                 header: `Property ID: ${surveyId}`,
-                // description: (
-                //     <div>
-                //         <h4>
-                //             Survey Number: {this.state.data[index][3]}<br/>
-                //             Village: {this.state.data[index][2]}<br/>
-                //             District: {this.state.data[index][2]}<br/>
-                //             State: {this.state.data[index][2]}<br/>
-                //         </h4>
-                //     </div>
-                // ),
+                description: (
+                    <div>
+                        <h4>
+                            Survey Number: {this.state.data[index] ? this.state.data[index][3]:''}<br/>
+                            Village: {this.state.data[index] ? this.state.data[index][2]:''}<br/>
+                            District: {this.state.data[index] ? this.state.data[index][1]:''}<br/>
+                            State: {this.state.data[index] ? this.state.data[index][0]:''}<br/>
+                        </h4>
+                    </div>
+                ),
                 style: {overflowWrap: 'break-word'},
                 extra: (
                     <Button content={'Make Available'} color={'red'} fluid loading={this.state.loading}

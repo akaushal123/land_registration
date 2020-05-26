@@ -1,27 +1,27 @@
 import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
-import {Button, Card} from 'semantic-ui-react';
+import {Button, Card, Header, Icon} from 'semantic-ui-react';
 import Layout from "../../components/Layout";
-import {Link} from '../../routes';
 import firebase from './../../components/firebaseAuth';
-import * as fb from 'firebase';
+import BuyProperty from "../../components/user/BuyProperty";
 
 class Requested extends Component {
 
     state = {
-        loaded: false,
         propertiesRequested: [],
         userAddress: '',
         status: []
     };
 
+    reqStatus = ["Not set","Pending","Reject","Approved"];
+
     async componentDidMount() {
 
         var userAddress = ethereum.selectedAddress;
+
         this.setState({userAddress: userAddress});
         var db = firebase.firestore();
-        var reqDataRef = db.collection("RequestedData").doc(
-            '0x14c4ddee634c037ca1bce97397d3bf85f6feb6d7');
+        var reqDataRef = db.collection("RequestedData").doc(userAddress);
 
         await reqDataRef.get().then((doc) => {
             if (doc.exists) {
@@ -34,14 +34,15 @@ class Requested extends Component {
                 console.log("Error getting document:", error);
             });
 
-        const status = await Promise.all(
-            this.state.propertiesRequested.map((id, index)=>{
-                return factory.methods.landInfoAdmin(id.id).call()
-            })
-        );
-        console.log('Staus', status);
-        this.setState({status: status});
-        console.log(this.state.status);
+        this.state.propertiesRequested.map((property, index)=>{
+            factory.methods.landInfoAdmin(property.id).call()
+                .then(info => {
+                    const status = [...this.state.status];
+                    status.push({reqStatus: this.reqStatus[info['3']], currentOwner: info['0']});
+                    this.setState({status : status});
+                    return true;
+                })
+        });
     }
 
     convertAddress = (address) => {
@@ -50,12 +51,21 @@ class Requested extends Component {
         return address.toLowerCase();
     };
 
-
     renderRequestedProperties() {
+
+        if(!this.state.propertiesRequested.length)
+            return (
+                <Header as='h1' textAlign={'center'} icon>
+                    <Icon name='edit' size={'large'}/>
+                    No property requested
+                </Header>
+            );
+
+
         const properties = this.state.propertiesRequested.map((surveyId, index) => {
             return {
                 header: `Property ID: ${this.state.propertiesRequested[index].id}`,
-                meta: `Requested Status: ${this.state.status[0][1] ? 'Yes' :'No'}`,
+                meta: `Requested Status: ${this.state.status[index] ? this.state.status[index].reqStatus : '' }`,
                 description: (
                     <div>
                         <h4>
@@ -63,13 +73,13 @@ class Requested extends Component {
                             Village: {this.state.propertiesRequested[index].village}<br/>
                             District: {this.state.propertiesRequested[index].district}<br/>
                             State: {this.state.propertiesRequested[index].state}<br/>
-                            {/*Current Owner: {this.state.status[index]1}*/}
+                            Current Owner: {this.state.status[index] ? this.state.status[index].currentOwner : ''}
                         </h4>
                     </div>
                 ),
                 style: {overflowWrap: 'break-word'},
                 extra: (
-                    <Button fluid color={!this.state.status[index] ? 'red': 'green'} content={'Buy Property'}/>
+                    <BuyProperty propertyId={this.state.propertiesRequested[index].id} status={this.state.status[index] ? this.state.status[index].reqStatus : 'Pending'}/>
                 )
             };
         });

@@ -9,5 +9,6 @@
     <orderEntry type="library" name="semantic" level="application" />
     <orderEntry type="library" name="statecity" level="application" />
     <orderEntry type="module" module-name="kickstart" />
+    <orderEntry type="module" module-name="kickstart" />
   </component>
 </module>
