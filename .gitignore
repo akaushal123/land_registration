@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 /.next
+/.idea
 
 .pnp.js
 

@@ -8,7 +8,7 @@ class RequestApproval extends Component {
         loadingApprove: false,
         loadingReject: false,
         errorMessage: '',
-        displayError: false
+        displayError: false,
     };
 
     acceptRequest = async () => {
@@ -39,7 +39,7 @@ class RequestApproval extends Component {
         return (
             <div>
                 <div className='ui two buttons'>
-                    <Button basic color='green' onClick={this.acceptRequest} loading={this.state.loadingAccept}>
+                    <Button basic color='green' onClick={this.acceptRequest} loading={this.state.loadingAccept} disabled={this.props.requestAddress === "0x0000000000000000000000000000000000000000"}>
                         Approve Request
                     </Button>
                     <Button basic color='red' onClick={this.declineRequest} loading={this.state.loadingReject}>

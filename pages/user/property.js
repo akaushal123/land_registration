@@ -41,7 +41,6 @@ class Property extends Component {
             this.setState({error: e.message})
         }
         this.setState({loading: false});
-
     };
 
     renderProperties() {
@@ -53,6 +52,7 @@ class Property extends Component {
                     No property owned
                 </Header>
             );
+
 
         const properties = this.state.properties.map((surveyId, index) => {
             return {

@@ -5,6 +5,7 @@ import styles from './addAdmin.module.css';
 import factory from './../../ethereum/factory';
 import web3 from './../../ethereum/web3';
 import firebase from "../../components/firebaseAuth";
+import * as fb from 'firebase';
 import { Router } from '../../routes';
 
 class AddAdmin extends Component {
@@ -16,8 +17,9 @@ class AddAdmin extends Component {
         adminAddress : '',
         buttonText : "Assign!",
         userAddress : "",
-        errorMessage : ''
-    }
+        errorMessage : '',
+        loading : false
+    };
 
     convertAddress = (address) => {
         if(!address)
@@ -34,6 +36,7 @@ class AddAdmin extends Component {
     onSubmit = async () => {
         event.preventDefault();
         try{
+            this.setState({loading : true});
             const userAddress = this.convertAddress(this.state.userAddress);
             const adminAddress = this.convertAddress(this.state.adminAddress);
             if(!userAddress){
@@ -45,23 +48,39 @@ class AddAdmin extends Component {
             });
 
             var db = firebase.firestore();
-            db.collection("UserRoles")
-                .doc(adminAddress)
-                .set({
-                    address : adminAddress,
-                    role : "admin",
-                    village: this.state.village
-                })
-                .then(function() {
-                    console.log("Admin Added");
-                })
-                .catch(function(error){
-                    console.error("Error adding admin : ",error);
-                });
-            this.setState({buttonText : "Added!!!"});
+            var userRef = db.collection("UserRoles").doc(adminAddress);
+
+            await userRef.get().then( (doc) => {
+                if (doc.exists) {
+                    userRef.update({
+                        villages: fb.firestore.FieldValue.arrayUnion({
+                            address : this.state.userAddress,
+                            village : this.state.village,
+                            role : 'admin'
+                        })
+                    })
+                    .then(function() {
+                        console.log("Admin Added");
+                    })
+                } else {
+                    console.log("Dont exits");
+                    userRef.set({
+                        villages : [{
+                            address : this.state.userAddress,
+                            village : this.state.village,
+                            role : 'admin'
+                        }]
+                    })
+                }
+            })
+            .catch(function(error) {
+                console.log("Error getting document:", error);
+            });
+
+            this.setState({buttonText : "Added!!!", loading : false});
             //Router.pushRoute('/superAdmin');
         }catch(err) {
-            this.setState({errorMessage : err.message.slice(0,50)});
+            this.setState({errorMessage : err.message.slice(0,50),loading : false});
         }
     }
 
@@ -105,7 +124,7 @@ class AddAdmin extends Component {
                                 onChange={event => this.setState({adminAddress : event.target.value})}/>
                             </Form.Field>
                             <Message error header="Oops!" content={this.state.errorMessage} />
-                            <Button primary> {this.state.buttonText} </Button>
+                            <Button loading={this.state.loading} primary> {this.state.buttonText} </Button>
                         </Form>
                 </section>
             </Layout>
