@@ -45,7 +45,7 @@ export default class viewRequest extends Component {
             const requestAddress = this.state.requests[index];
             return{
                 header: `Property ID: ${property}`,
-                description: `Requester: ${requestAddress}`,
+                description: `Requester: ${requestAddress === '0x0000000000000000000000000000000000000000' ? 'None' : requestAddress}`,
                 style: { overflowWrap: 'break-word' },
                 extra: (
                     <RequestApproval property={property} requestAddress={requestAddress}/>

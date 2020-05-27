@@ -11,9 +11,9 @@ import { Router } from '../../routes';
 class AddAdmin extends Component {
 
     state = {
-        village : "v1",
-        district : "d1",
-        state : "s1",
+        village : "",
+        district : "",
+        state : "",
         adminAddress : '',
         buttonText : "Assign!",
         userAddress : "",
@@ -49,7 +49,17 @@ class AddAdmin extends Component {
 
             var db = firebase.firestore();
             var userRef = db.collection("UserRoles").doc(adminAddress);
-
+            await userRef.set({
+                address : this.state.userAddress,
+                village : this.state.village,
+                role : 'admin'
+            }).then(()=>{
+                console.log("Added");
+            }).catch(function (error) {
+                console.error("Error adding document: ", error);
+                // this.setState({render: true,success:false});
+            });
+/*
             await userRef.get().then( (doc) => {
                 if (doc.exists) {
                     userRef.update({
@@ -76,7 +86,7 @@ class AddAdmin extends Component {
             .catch(function(error) {
                 console.log("Error getting document:", error);
             });
-
+*/
             this.setState({buttonText : "Added!!!", loading : false});
             //Router.pushRoute('/superAdmin');
         }catch(err) {
@@ -118,7 +128,7 @@ class AddAdmin extends Component {
                                 <label>Admin Address</label>
                                 <Input 
                                 required 
-                                label="addrress" 
+                                label="address"
                                 labelPosition="right" 
                                 value={this.state.adminAddress}
                                 onChange={event => this.setState({adminAddress : event.target.value})}/>

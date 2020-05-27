@@ -9,7 +9,8 @@ import { Button } from 'semantic-ui-react';
 class Index extends Component {
     state = {
         userAddress : '',
-        loading : false
+        loading : false,
+        role: ''
     };
 
     convertAddress = (address) => {
@@ -29,15 +30,16 @@ class Index extends Component {
         var userAddress =  await ethereum.selectedAddress;
         userAddress = this.convertAddress(userAddress);
         
-        this.setState({userAddress});    
-        
+        this.setState({userAddress});
+        var role ;
         var db = firebase.firestore();
         const dataRef = db.collection("UserRoles").doc(userAddress);
-        var role ;
-        await dataRef.get()
-            .then( (doc) => {
+        await dataRef.get().then(doc =>{
                 if (doc.exists) {
+                    console.log(doc.data());
                     role = doc.data().role;
+                    console.log(role);
+                    // this.setState({role});
                 } else {
                     role = 'user';
                 }
@@ -46,7 +48,7 @@ class Index extends Component {
                 console.log("Error getting document:", error);
             });
         this.setState({loading : false});
-            if(role === 'SA'){
+           if(role === 'SA'){
             Router.pushRoute('/superAdmin');
         }
         else if(role === 'admin'){
@@ -54,8 +56,7 @@ class Index extends Component {
         }else {
             Router.pushRoute('/user');
         }
-
-    }
+    };
 
     render() {
         return (

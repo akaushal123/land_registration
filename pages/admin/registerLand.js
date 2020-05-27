@@ -35,7 +35,7 @@ class RegisterLand extends Component {
     register = async () => {
         event.preventDefault();
         try{
-            this.setState({loading : true});
+            this.setState({loading : true, errorMessage: ''});
             const userAddress = this.convertAddress(this.state.userAddress);
             const ownerAddress = this.convertAddress(this.state.ownerAddress);
             if(!userAddress){
@@ -55,7 +55,7 @@ class RegisterLand extends Component {
                 computedId
                 )
                 .send({
-                from : userAddress
+                from : this.state.userAddress
             });
 
             // add record to firebase
@@ -79,7 +79,7 @@ class RegisterLand extends Component {
             this.setState({buttonText : "Registered!!!", loading : false});
             Router.pushRoute('/admin');
         }catch(err) {
-            this.setState({errorMessage : err.message.slice(0,50),loading : false});
+            this.setState({errorMessage : err.message ,loading : false});
         }
     };
 

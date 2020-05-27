@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import factory from "../../ethereum/factory";
 import firebase from "../firebaseAuth";
+import * as fb from 'firebase';
 import {Button, Message} from "semantic-ui-react";
 
 class BuyProperty extends Component {
@@ -25,17 +26,26 @@ class BuyProperty extends Component {
         var db = firebase.firestore();
         var reqDataRef = db.collection("RequestedData").doc(userAddress);
         const LandInfo = await factory.methods.landInfoOwner(this.props.propertyId).call();
-        await reqDataRef.delete({
-            district: LandInfo[1],
-            village: LandInfo[2],
-            state: LandInfo[0],
-            survey: LandInfo[3],
-            id: this.props.propertyId
-        });
+        // await reqDataRef.update({
+        //     requested : fb.firestore.FieldValue.arrayRemove({
+        //         district : LandInfo[1],
+        //         village : LandInfo[2],
+        //         state : LandInfo[0],
+        //         survey : LandInfo[3],
+        //         id : this.props.propertyId})
+        // });
         try {
             await factory.methods.buyProperty(this.props.propertyId).send({
                 from: userAddress,
                 value: payablePrice
+            });
+            await reqDataRef.update({
+                requested : fb.firestore.FieldValue.arrayRemove({
+                    district : LandInfo[1],
+                    village : LandInfo[2],
+                    state : LandInfo[0],
+                    survey : LandInfo[3],
+                    id : this.props.propertyId})
             });
         } catch (err) {
             this.setState({error: err.message, displayError: true});
@@ -51,7 +61,7 @@ class BuyProperty extends Component {
                         content={'Buy Property'} onClick={this.buyProperty}
                         disabled={this.props.status !== 'Approved'}/>
                 {this.state.displayError ?
-                    <Message error size={'tiny'} header={'Error'} content={this.state.errorMessage}/> : null}
+                    <Message error size={'tiny'} header={'Error'} content={this.state.error}/> : null}
             </div>
         )
     }

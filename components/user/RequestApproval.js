@@ -42,7 +42,7 @@ class RequestApproval extends Component {
                     <Button basic color='green' onClick={this.acceptRequest} loading={this.state.loadingAccept} disabled={this.props.requestAddress === "0x0000000000000000000000000000000000000000"}>
                         Approve Request
                     </Button>
-                    <Button basic color='red' onClick={this.declineRequest} loading={this.state.loadingReject}>
+                    <Button basic color='red' onClick={this.declineRequest} loading={this.state.loadingReject} disabled={this.props.requestAddress === "0x0000000000000000000000000000000000000000"}>
                         Decline Request
                     </Button>
                 </div>

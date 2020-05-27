@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
 import {Button, Card, Header, Icon} from 'semantic-ui-react';
 import Layout from "../../components/Layout";
+import MakeAvailable from "../../components/user/MakeAvailable";
 
 class Property extends Component {
 
@@ -23,25 +24,12 @@ class Property extends Component {
             factory.methods.landInfoOwner(property).call()
                 .then(info => {
                     const data = [...this.state.data];
-                    console.log('data54', data);
                     data.push(info);
                     this.setState({data});
                     return true;
                 })
         });
     }
-
-    makeAvailable = async (surveyId) => {
-        this.setState({loading: true, error: ''});
-        try {
-            await factory.methods.makeAvailable(surveyId).send({
-                from: ethereum.selectedAddress
-            });
-        } catch (e) {
-            this.setState({error: e.message})
-        }
-        this.setState({loading: false});
-    };
 
     renderProperties() {
 
@@ -69,8 +57,7 @@ class Property extends Component {
                 ),
                 style: {overflowWrap: 'break-word'},
                 extra: (
-                    <Button content={'Make Available'} color={'red'} fluid loading={this.state.loading}
-                            onClick={event => this.makeAvailable(surveyId)}/>
+                    <MakeAvailable surveyId={surveyId} isAvailable={this.state.data[index] ? this.state.data[index][4] : true}/>
                 )
             }
         });

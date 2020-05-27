@@ -20,6 +20,18 @@
     "/_polyfills": [
       "static/runtime/polyfills.js"
     ],
+    "/next/dist/pages/_error": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/user/profile": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/user/property": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
     "/user/requested": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"

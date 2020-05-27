@@ -13,33 +13,34 @@ class Requested extends Component {
         status: []
     };
 
-    reqStatus = ["Not set","Pending","Reject","Approved"];
+    reqStatus = ["Not set", "Pending", "Reject", "Approved"];
 
     async componentDidMount() {
 
         var userAddress = ethereum.selectedAddress;
 
         this.setState({userAddress: userAddress});
-        var db = firebase.firestore();
-        var reqDataRef = db.collection("RequestedData").doc(userAddress);
 
-        await reqDataRef.get().then((doc) => {
+        userAddress = this.convertAddress(userAddress);
+        var db = firebase.firestore();
+        await db.collection("RequestedData").doc(userAddress).get().then(doc => {
             if (doc.exists) {
                 this.setState({propertiesRequested: doc.data().requested});
             } else {
                 console.log("No Requested");
             }
-        })
-            .catch(function (error) {
-                console.log("Error getting document:", error);
-            });
+        }).catch(function (error) {
+            console.log("Error getting document:", error);
+        });
 
-        this.state.propertiesRequested.map((property, index)=>{
-            factory.methods.landInfoAdmin(property.id).call()
+        this.state.propertiesRequested.map((property) => {
+            factory.methods.landInfoAdmin(property.id).call({
+                from: userAddress
+            })
                 .then(info => {
                     const status = [...this.state.status];
                     status.push({reqStatus: this.reqStatus[info['3']], currentOwner: info['0']});
-                    this.setState({status : status});
+                    this.setState({status: status});
                     return true;
                 })
         });
@@ -53,7 +54,7 @@ class Requested extends Component {
 
     renderRequestedProperties() {
 
-        if(!this.state.propertiesRequested.length)
+        if (!this.state.propertiesRequested.length)
             return (
                 <Header as='h1' textAlign={'center'} icon>
                     <Icon name='edit' size={'large'}/>
@@ -65,7 +66,7 @@ class Requested extends Component {
         const properties = this.state.propertiesRequested.map((surveyId, index) => {
             return {
                 header: `Property ID: ${this.state.propertiesRequested[index].id}`,
-                meta: `Requested Status: ${this.state.status[index] ? this.state.status[index].reqStatus : '' }`,
+                meta: `Requested Status: ${this.state.status[index] ? this.state.status[index].reqStatus : ''}`,
                 description: (
                     <div>
                         <h4>
@@ -79,7 +80,8 @@ class Requested extends Component {
                 ),
                 style: {overflowWrap: 'break-word'},
                 extra: (
-                    <BuyProperty propertyId={this.state.propertiesRequested[index].id} status={this.state.status[index] ? this.state.status[index].reqStatus : 'Pending'}/>
+                    <BuyProperty propertyId={this.state.propertiesRequested[index].id}
+                                 status={this.state.status[index] ? this.state.status[index].reqStatus : 'Pending'}/>
                 )
             };
         });

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import factory from '../../ethereum/factory';
-import {Input, Card, Search, Grid, Form, Icon, Container, Button} from "semantic-ui-react";
+import {Input, Card, Search, Grid, Form, Icon, Container, Button, Header} from "semantic-ui-react";
 import {RequestSale} from "../../components/user/RequestSale";
 import Layout from "../../components/Layout";
 
@@ -36,6 +36,14 @@ class ExploreProperty extends Component {
     }
 
     renderSearchCard() {
+
+        if(this.state.currentOwner === '0x0000000000000000000000000000000000000000')
+        return (
+            <Header as='h1' textAlign={'center'} icon>
+                <Icon name='address card' />
+                No property exist with {this.state.id}
+            </Header>
+        );
 
         const header = (
             <div>
