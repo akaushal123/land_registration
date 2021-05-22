@@ -44,7 +44,7 @@ class AddAdmin extends Component {
             }
 
             await factory.methods.addAdmin(adminAddress,this.state.village).send({
-                from : userAddress
+                from : this.state.userAddress
             });
 
             var db = firebase.firestore();
@@ -90,7 +90,7 @@ class AddAdmin extends Component {
             this.setState({buttonText : "Added!!!", loading : false});
             //Router.pushRoute('/superAdmin');
         }catch(err) {
-            this.setState({errorMessage : err.message.slice(0,50),loading : false});
+            this.setState({errorMessage : err.message,loading : false});
         }
     }
 
